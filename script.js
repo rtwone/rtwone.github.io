@@ -327,15 +327,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- AWAL LOGIKA CHATBOX (Mobile & Desktop) ---
-
-    // Deklarasi elemen chatbox di awal blok logika chatbox
+    const chatboxOverlay = document.getElementById('chatbox-overlay');
     const chatboxToggle = document.getElementById('chatbox-toggle');
     const chatboxContainer = document.getElementById('chatbox-container');
     const closeChatButton = document.getElementById('close-chat');
-    const mobileChatMessages = document.getElementById('chatbox-messages'); // Untuk floating chatbox
+    const mobileChatMessages = document.getElementById('chatbox-messages');
     const mobileChatInput = document.getElementById('chatbox-input');
     const mobileChatSendButton = document.getElementById('chatbox-send');
 
+    const desktopChatSection = document.getElementById('desktop-chat-section');
     const desktopChatMessages = document.getElementById('desktop-chat-messages');
     const desktopChatInput = document.getElementById('desktop-chat-input');
     const desktopChatSendButton = document.getElementById('desktop-chat-send');
@@ -354,13 +354,8 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
 
     const initialAiGreeting = "Halo! Saya adalah asisten AI untuk portofolio Irfan Hariyanto. Ada yang bisa saya bantu tanyakan mengenai Irfan atau karyanya?";
 
-    // Fungsi-fungsi pembantu chatbox didefinisikan sebelum digunakan
     function addMessageToChatUI(text, sender, messagesContainerEl) {
-        if (!messagesContainerEl) {
-            // console.error(`Target messages container tidak ditemukan untuk sender: ${sender}. Pesan: ${text}`);
-            return;
-        }
-        // console.log(`Menambahkan pesan ke ${messagesContainerEl.id || 'kontainer tanpa id'}: "${text.substring(0,30)}..." dari ${sender}`);
+        if (!messagesContainerEl) return;
         const messageElement = document.createElement('div');
         messageElement.classList.add('chat-message', sender === 'user' ? 'user-message' : 'ai-message');
 
@@ -397,16 +392,16 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
                         messageElement.innerHTML += formattedText[i];
                         i++;
                     }
-                    messagesContainerEl.scrollTop = messagesContainerEl.scrollHeight;
+                    if (messagesContainerEl) messagesContainerEl.scrollTop = messagesContainerEl.scrollHeight;
                     setTimeout(typeCharacter, typingSpeed);
                 }
             }
             typeCharacter();
         } else {
             messageElement.textContent = text;
-            messagesContainerEl.scrollTop = messagesContainerEl.scrollHeight;
+            if (messagesContainerEl) messagesContainerEl.scrollTop = messagesContainerEl.scrollHeight;
         }
-        messagesContainerEl.appendChild(messageElement);
+        if (messagesContainerEl) messagesContainerEl.appendChild(messageElement);
     }
 
     function showTypingIndicatorIn(messagesContainerEl) {
@@ -520,12 +515,18 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
             { role: "model", parts: [{ text: initialAiGreeting }] }
         ];
 
-        mobileChatMessages.innerHTML = '';
-        addMessageToChatUI(initialAiGreeting, 'ai', mobileChatMessages);
+        if (mobileChatMessages) {
+            mobileChatMessages.innerHTML = '';
+            addMessageToChatUI(initialAiGreeting, 'ai', mobileChatMessages);
+        }
 
         chatboxToggle.addEventListener('click', (event) => {
             event.stopPropagation();
             chatboxContainer.classList.toggle('open');
+            if (chatboxOverlay) chatboxOverlay.classList.toggle('hidden');
+            if (chatboxOverlay) chatboxOverlay.classList.toggle('visible'); // Gunakan kelas visible
+            document.body.classList.toggle('no-scroll', chatboxContainer.classList.contains('open'));
+
             if (chatboxContainer.classList.contains('open')) {
                 chatboxToggle.innerHTML = '<i class="fas fa-times"></i>';
                 if (mobileChatInput) mobileChatInput.focus();
@@ -535,17 +536,23 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
         });
         closeChatButton.addEventListener('click', () => {
             chatboxContainer.classList.remove('open');
+            if (chatboxOverlay) {
+                chatboxOverlay.classList.remove('visible');
+                chatboxOverlay.classList.add('hidden');
+            }
+            document.body.classList.remove('no-scroll');
             chatboxToggle.innerHTML = '<i class="fas fa-comments"></i>';
         });
 
-        window.addEventListener('click', function (event) {
-            if (chatboxContainer && chatboxContainer.classList.contains('open')) {
-                if (!chatboxContainer.contains(event.target) && !chatboxToggle.contains(event.target)) {
-                    chatboxContainer.classList.remove('open');
-                    chatboxToggle.innerHTML = '<i class="fas fa-comments"></i>';
-                }
-            }
-        });
+        if (chatboxOverlay) {
+            chatboxOverlay.addEventListener('click', () => {
+                chatboxContainer.classList.remove('open');
+                chatboxOverlay.classList.remove('visible');
+                chatboxOverlay.classList.add('hidden');
+                document.body.classList.remove('no-scroll');
+                chatboxToggle.innerHTML = '<i class="fas fa-comments"></i>';
+            });
+        }
 
         mobileChatSendButton.addEventListener('click', () => handleSendMessage(mobileChatInput.value, mobileChatHistory, mobileChatMessages, mobileChatInput, mobileChatSendButton));
         mobileChatInput.addEventListener('keypress', (event) => {

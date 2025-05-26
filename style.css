@@ -110,6 +110,11 @@ body {
     line-height: 1.7;
 }
 
+body.no-scroll {
+    overflow: hidden;
+}
+
+
 /* Loading Screen Styles */
 #loading-screen {
     position: fixed;
@@ -124,14 +129,12 @@ body {
     z-index: 9999;
     overflow: hidden;
     transition: opacity 0.5s ease-out 0.2s, visibility 0.5s ease-out 0.2s;
-    /* pointer-events: auto; Awalnya bisa diklik jika ada interaksi di loading screen */
 }
 
 #loading-screen.hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    /* Tambahkan ini agar tidak menghalangi klik setelah disembunyikan */
 }
 
 .sky {
@@ -286,6 +289,7 @@ body {
 #main-header {
     background-color: var(--color-header-bg-transparent);
     transition: background-color 0.3s ease-in-out;
+    /* z-index: 50; sudah dari HTML, akan di-override oleh chatbox overlay jika perlu */
 }
 
 #main-header.scrolled {
@@ -611,6 +615,30 @@ body {
     color: var(--color-primary-fresh-darker);
 }
 
+/* Chatbox Overlay */
+#chatbox-overlay {
+    position: fixed;
+    inset: 0;
+    /* top, right, bottom, left = 0 */
+    background-color: rgba(0, 0, 0, 0.3);
+    /* Hitam semi-transparan */
+    backdrop-filter: blur(4px);
+    /* Efek blur, sesuaikan nilai blur jika perlu */
+    -webkit-backdrop-filter: blur(4px);
+    /* Untuk Safari */
+    z-index: 1000;
+    /* Di bawah chatbox, di atas konten halaman */
+    display: none;
+    /* Awalnya disembunyikan */
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+#chatbox-overlay.visible {
+    display: block;
+    opacity: 1;
+}
+
 
 /* Chatbox Styles Fresh (Responsif - Ukuran Diperkecil untuk Mobile) */
 .chatbox-toggle-fresh {
@@ -632,15 +660,11 @@ body {
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
 
-    /* sm breakpoint */
+    /* md breakpoint (untuk desktop) */
     .chatbox-toggle-fresh {
-        bottom: 20px;
-        right: 20px;
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
+        display: none;
     }
 }
 
@@ -649,40 +673,43 @@ body {
 }
 
 .chatbox-container-fresh {
+    /* Styling untuk chatbox mobile (floating) */
     position: fixed;
-    bottom: calc(1rem + 50px + 10px);
-    right: 1rem;
-    width: calc(100vw - 2rem);
-    max-width: 320px;
-    height: 60vh;
-    max-height: 450px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 90vw;
+    max-width: 340px;
+    /* Diperkecil lagi untuk mobile */
+    height: 70vh;
+    max-height: 500px;
+    /* Diperkecil lagi untuk mobile */
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Latar belakang sedikit lebih solid */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     display: none;
     flex-direction: column;
     overflow: hidden;
     z-index: 1001;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
 
-    /* sm breakpoint */
+    /* md breakpoint */
     .chatbox-container-fresh {
-        bottom: 90px;
-        right: 20px;
-        width: 450px;
-        max-width: 95vw;
-        height: 600px;
-        max-height: calc(100vh - 110px);
+        display: none !important;
     }
 }
 
 .chatbox-container-fresh.open {
     display: flex;
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .chatbox-header-fresh {
@@ -690,8 +717,8 @@ body {
     color: var(--color-chatbox-text-on-primary-bg-fresh);
     padding: 10px 12px;
     font-weight: 600;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -702,7 +729,7 @@ body {
     background: none;
     border: none;
     color: var(--color-chatbox-text-on-primary-bg-fresh);
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
 }
 
@@ -713,7 +740,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    background-color: #F9FAFB;
+    background-color: transparent;
     padding-bottom: 10px;
 }
 
@@ -740,14 +767,14 @@ body {
 
 .chat-message code {
     font-family: 'Courier New', Courier, monospace;
-    background-color: #f0f0f0;
+    background-color: rgba(229, 231, 235, 0.8);
     padding: 0.1em 0.3em;
     border-radius: 3px;
     font-size: 0.8em;
 }
 
 .chat-message pre {
-    background-color: #f0f0f0;
+    background-color: rgba(229, 231, 235, 0.8);
     padding: 0.4em;
     border-radius: 5px;
     overflow-x: auto;
@@ -768,7 +795,7 @@ body {
 }
 
 .chat-message.ai-message {
-    background-color: #ECFDF5;
+    background-color: var(--color-chatbox-ai-message-bg-fresh);
     color: var(--color-chatbox-ai-message-text-fresh);
     align-self: flex-start;
     border-bottom-left-radius: 2px;
@@ -777,10 +804,10 @@ body {
 .chatbox-input-container-fresh {
     display: flex;
     padding: 6px;
-    border-top: 1px solid #e5e7eb;
-    background-color: white;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-top: 1px solid rgba(229, 231, 235, 0.5);
+    background-color: transparent;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .chatbox-input-fresh {
@@ -790,12 +817,14 @@ body {
     border-radius: 18px;
     margin-right: 5px;
     font-size: 0.85rem;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .chatbox-input-fresh:focus {
     border-color: var(--color-primary-fresh-darker);
     box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.5);
     outline: none;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .chatbox-send-fresh {
@@ -827,7 +856,7 @@ body {
 
 /* Style untuk AI Typing Indicator (dengan animasi titik baru) */
 .ai-typing-indicator {
-    background-color: #e2e8f0;
+    background-color: rgba(226, 232, 240, 0.8);
     color: var(--color-typing-dot);
     padding: 6px 10px;
     border-radius: 10px;
