@@ -77,6 +77,7 @@
     --color-contact-link-bg: var(--color-white-pure);
     --color-contact-link-text: var(--color-text-dark-main);
     --color-contact-link-hover-bg: #E0F2FE;
+    --color-contact-link-text-hover: var(--color-primary-fresh-darker);
 
     /* Warna untuk Footer Fresh */
     --color-footer-bg: var(--color-text-dark-main);
@@ -289,7 +290,8 @@ body.no-scroll {
 #main-header {
     background-color: var(--color-header-bg-transparent);
     transition: background-color 0.3s ease-in-out;
-    /* z-index: 40; sudah dari HTML */
+    z-index: 40;
+    /* Diturunkan agar di bawah chatbox overlay */
 }
 
 #main-header.scrolled {
@@ -494,52 +496,137 @@ body.no-scroll {
 /* Project Card Styles Fresh */
 .project-card-fresh {
     background-color: var(--color-project-card-bg);
-    border-radius: 20px;
-    box-shadow: 0 8px 16px var(--color-project-card-shadow);
+    border-radius: 16px;
+    /* Sedikit lebih kecil untuk mobile */
+    box-shadow: 0 6px 12px var(--color-project-card-shadow);
+    /* Shadow disesuaikan */
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
 }
 
-.project-card-fresh:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 24px var(--color-project-card-shadow);
+@media (min-width: 768px) {
+
+    /* md breakpoint */
+    .project-card-fresh {
+        border-radius: 20px;
+        box-shadow: 0 8px 16px var(--color-project-card-shadow);
+    }
 }
 
-.project-card-fresh .project-image-fresh {
+.project-card-fresh:hover {
+    transform: translateY(-4px);
+    /* Efek hover lebih halus */
+    box-shadow: 0 10px 20px var(--color-project-card-shadow);
+}
+
+@media (min-width: 768px) {
+
+    /* md breakpoint */
+    .project-card-fresh:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 24px var(--color-project-card-shadow);
+    }
+}
+
+.project-image-fresh-small {
+    /* Class baru untuk gambar proyek di mobile */
     width: 100%;
-    height: 200px;
+    height: 150px;
+    /* Tinggi gambar proyek lebih kecil untuk mobile */
     object-fit: cover;
 }
 
+@media (min-width: 768px) {
+
+    /* md breakpoint */
+    .project-image-fresh-small {
+        height: 200px;
+        /* Kembali ke tinggi semula untuk desktop */
+    }
+}
+
 .project-card-fresh .project-content-fresh {
-    padding: 20px;
+    padding: 0.75rem;
+    /* Padding lebih kecil untuk mobile */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.project-card-fresh .project-title-fresh {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--color-project-card-title);
-    margin-bottom: 8px;
+@media (min-width: 768px) {
+
+    /* md breakpoint */
+    .project-card-fresh .project-content-fresh {
+        padding: 20px;
+    }
 }
 
-.project-card-fresh .project-description-fresh {
-    font-size: 0.875rem;
-    color: var(--color-project-card-description);
-    margin-bottom: 16px;
-    line-height: 1.6;
-    min-height: 50px;
+.project-card-fresh .project-title-fresh {
+    font-size: 1rem;
+    /* Ukuran font judul lebih kecil untuk mobile */
+    font-weight: 600;
+    color: var(--color-project-card-title);
+    margin-bottom: 0.25rem;
+    /* Margin bawah lebih kecil */
 }
+
+@media (min-width: 640px) {
+
+    /* sm breakpoint */
+    .project-card-fresh .project-title-fresh {
+        font-size: 1.1rem;
+    }
+}
+
+@media (min-width: 768px) {
+
+    /* md breakpoint */
+    .project-card-fresh .project-title-fresh {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+}
+
+
+.project-card-fresh .project-description-fresh {
+    font-size: 0.75rem;
+    /* Deskripsi lebih kecil */
+    color: var(--color-project-card-description);
+    margin-bottom: 0.5rem;
+    /* Margin bawah lebih kecil */
+    line-height: 1.5;
+    min-height: 3em;
+    /* Sesuaikan agar cukup untuk ~2 baris */
+}
+
+@media (min-width: 640px) {
+
+    /* sm breakpoint */
+    .project-card-fresh .project-description-fresh {
+        font-size: 0.875rem;
+        min-height: 40px;
+    }
+}
+
+@media (min-width: 768px) {
+
+    /* md breakpoint */
+    .project-card-fresh .project-description-fresh {
+        margin-bottom: 16px;
+        min-height: 50px;
+    }
+}
+
 
 .project-card-fresh .project-link-fresh {
     display: inline-block;
-    padding: 8px 14px;
-    border-radius: 8px;
+    padding: 0.375rem 0.75rem;
+    /* Padding tombol lebih kecil */
+    border-radius: 6px;
+    /* Radius tombol lebih kecil */
     text-decoration: none;
     font-weight: 500;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -548,6 +635,18 @@ body.no-scroll {
     background-color: var(--color-project-card-link-bg);
     color: var(--color-project-card-link-text);
     margin-top: auto;
+    font-size: 0.75rem;
+    /* Font tombol lebih kecil */
+}
+
+@media (min-width: 640px) {
+
+    /* sm breakpoint */
+    .project-card-fresh .project-link-fresh {
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 0.875rem;
+    }
 }
 
 .project-card-fresh .project-link-fresh:hover {
@@ -556,51 +655,107 @@ body.no-scroll {
 
 .project-card-fresh .project-tag-fresh {
     position: absolute;
-    top: 12px;
-    left: 12px;
+    top: 0.5rem;
+    /* Disesuaikan */
+    left: 0.5rem;
+    /* Disesuaikan */
     background-color: var(--color-project-card-tag-bg);
     color: var(--color-project-card-tag-text);
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 0.75rem;
+    padding: 0.125rem 0.5rem;
+    /* Padding tag lebih kecil */
+    border-radius: 4px;
+    /* Radius tag lebih kecil */
+    font-size: 0.65rem;
+    /* Font tag lebih kecil */
     font-weight: 500;
+}
+
+@media (min-width: 640px) {
+
+    /* sm breakpoint */
+    .project-card-fresh .project-tag-fresh {
+        top: 12px;
+        left: 12px;
+        padding: 4px 10px;
+        font-size: 0.75rem;
+    }
 }
 
 .project-card-fresh .arrow-icon-fresh {
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 0.5rem;
+    /* Disesuaikan */
+    right: 0.5rem;
+    /* Disesuaikan */
     background-color: var(--color-project-card-arrow-icon-bg);
     color: var(--color-project-card-arrow-icon);
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    /* Ukuran ikon lebih kecil */
+    height: 24px;
+    /* Ukuran ikon lebih kecil */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 0.75rem;
+    /* Ukuran ikon internal */
 }
+
+@media (min-width: 640px) {
+
+    /* sm breakpoint */
+    .project-card-fresh .arrow-icon-fresh {
+        top: 12px;
+        right: 12px;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+}
+
 
 /* Contact Section Fresh */
 .bg-contact-fresh {
     background-color: var(--color-contact-bg);
 }
 
-.contact-link-fresh {
-    background-color: var(--color-contact-link-bg);
-    color: var(--color-contact-link-text);
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
+.contact-link-text-fresh {
+    /* Kelas baru untuk link kontak sebagai teks biasa */
+    color: var(--color-white-pure);
     font-weight: 500;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: color 0.3s ease;
     display: inline-flex;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 0.25rem 0;
+    /* Sedikit padding vertikal */
+    font-size: 0.9rem;
+    /* Ukuran font disesuaikan untuk mobile */
 }
 
-.contact-link-fresh:hover {
-    background-color: var(--color-contact-link-hover-bg);
+.contact-link-text-fresh:hover {
+    color: var(--color-accent-blue-sky);
+    /* Warna hover */
 }
+
+@media (min-width: 640px) {
+
+    /* sm breakpoint, kembalikan ke gaya tombol jika diinginkan */
+    .contact-link-text-fresh {
+        background-color: var(--color-contact-link-bg);
+        color: var(--color-contact-link-text);
+        padding: 0.75rem 1.5rem;
+        border-radius: 9999px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        font-size: initial;
+        /* Kembalikan ke default jika diatur spesifik sebelumnya */
+    }
+
+    .contact-link-text-fresh:hover {
+        background-color: var(--color-contact-link-hover-bg);
+        color: var(--color-contact-link-text-hover);
+    }
+}
+
 
 /* Footer Fresh */
 .bg-footer-fresh {
@@ -613,24 +768,6 @@ body.no-scroll {
 
 .text-accent-light-green {
     color: var(--color-primary-fresh-darker);
-}
-
-/* Chatbox Overlay */
-#chatbox-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    z-index: 1000;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease-out;
-}
-
-#chatbox-overlay.visible {
-    display: block;
-    opacity: 1;
 }
 
 
@@ -655,8 +792,6 @@ body.no-scroll {
 }
 
 @media (min-width: 768px) {
-
-    /* md breakpoint (untuk desktop) */
     .chatbox-toggle-fresh {
         display: none;
     }
@@ -667,7 +802,6 @@ body.no-scroll {
 }
 
 .chatbox-container-fresh {
-    /* Styling untuk chatbox mobile (floating) */
     position: fixed;
     top: 50%;
     left: 50%;
@@ -690,8 +824,6 @@ body.no-scroll {
 }
 
 @media (min-width: 768px) {
-
-    /* md breakpoint */
     .chatbox-container-fresh {
         display: none !important;
     }
