@@ -4,10 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loadingScreen = document.getElementById('loading-screen');
     const mainContent = document.getElementById('main-content');
+    let engineSound;
 
     const airplaneAnimationDuration = 4000;
     const totalLoadingDuration = airplaneAnimationDuration + 500;
     const fadeOutTransition = 500;
+    const soundStopDelay = 200;
 
     // Network Canvas Animation (bagian hero section)
     let startNetworkAnimation;
@@ -115,8 +117,33 @@ document.addEventListener('DOMContentLoaded', () => {
             airplaneContainer.style.animationDuration = `${airplaneAnimationDuration / 1000}s`;
         }
 
+        Tone.start().then(() => {
+            if (typeof Tone !== 'undefined' && Tone.NoiseSynth && Tone.AutoFilter) {
+                engineSound = new Tone.NoiseSynth({
+                    noise: { type: 'brown', playbackRate: 0.45 },
+                    envelope: { attack: 1.5, decay: 1, sustain: 0.8, release: 1.5 },
+                    volume: -18
+                }).toDestination();
+
+                const filter = new Tone.AutoFilter({
+                    frequency: "8m",
+                    baseFrequency: 180,
+                    octaves: 2.8
+                }).toDestination().start();
+                engineSound.connect(filter);
+                if (typeof engineSound.triggerAttack === 'function') {
+                    engineSound.triggerAttack();
+                }
+            }
+        }).catch(e => {
+            // console.warn("Tone.js AudioContext could not be started automatically.", e);
+        });
+
         setTimeout(() => {
             console.log("Timeout untuk loading screen selesai.");
+            if (engineSound && typeof engineSound.triggerRelease === 'function') {
+                engineSound.triggerRelease();
+            }
 
             loadingScreen.classList.add('hidden');
             console.log("Kelas 'hidden' ditambahkan ke loading screen.");
@@ -156,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMover = document.querySelector('.nav-mover');
     let currentActiveLink = document.querySelector('.nav-link-fresh.active');
     const sections = [];
-    const logoLink = document.getElementById('logo-link');
 
     navLinks.forEach(link => {
         const sectionId = link.getAttribute('href');
@@ -174,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navMover.style.width = targetLink.offsetWidth + 'px';
             navMover.style.height = targetLink.offsetHeight + 'px';
             navMover.style.top = targetLink.offsetTop + 'px';
-            navMover.style.opacity = '1';
+            navMover.style.opacity = '1'; // Selalu tampilkan mover jika ada targetLink
         } else if (navMover) {
             navMover.style.opacity = '0';
         }
@@ -187,32 +213,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeLinkElement) {
             activeLinkElement.classList.add('active', 'active-state');
             currentActiveLink = activeLinkElement;
-            if (navContainer && !navContainer.matches(':hover')) {
+            // Selalu panggil positionMover ketika link aktif berubah,
+            // kecuali jika mouse sedang hover di atas link LAIN (untuk efek hover).
+            const isHoveringAnotherLink = Array.from(navLinks).some(link => link.classList.contains('hover-state') && link !== activeLinkElement);
+            if (!isHoveringAnotherLink) {
                 positionMover(activeLinkElement);
             }
-        }
-    }
-
-    function handleNavLinkClick(linkElement, event) {
-        if (event) event.preventDefault();
-        updateActiveLinkStyles(linkElement);
-
-        const targetId = linkElement.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            const headerOffset = mainHeader ? mainHeader.offsetHeight : 0;
-            let offsetPosition;
-            if (targetId === '#home') {
-                offsetPosition = 0;
-            } else {
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                offsetPosition = elementPosition + window.scrollY - headerOffset - 20;
-            }
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
         }
     }
 
@@ -225,7 +231,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navLinks.forEach(link => {
         link.addEventListener('click', function (e) {
-            handleNavLinkClick(this, e);
+            e.preventDefault();
+            updateActiveLinkStyles(this); // Ini akan memanggil positionMover
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerOffset = mainHeader ? mainHeader.offsetHeight : 0;
+                let offsetPosition;
+                if (targetId === '#home') {
+                    offsetPosition = 0;
+                } else {
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    offsetPosition = elementPosition + window.scrollY - headerOffset - 20;
+                }
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
         });
 
         link.addEventListener('mouseenter', function () {
@@ -242,22 +267,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    if (logoLink) {
-        logoLink.addEventListener('click', function (e) {
-            e.preventDefault();
-            const homeNavLink = document.querySelector('.nav-link-fresh[href="#home"]');
-            if (homeNavLink) {
-                handleNavLinkClick(homeNavLink);
-            }
-        });
-    }
-
     if (navContainer) {
         navContainer.addEventListener('mouseleave', () => {
             if (currentActiveLink && navMover) {
                 positionMover(currentActiveLink);
                 navLinks.forEach(l => l.classList.remove('hover-state'));
-                currentActiveLink.classList.add('active-state');
+                if (currentActiveLink) currentActiveLink.classList.add('active-state'); // Pastikan link aktif tetap active-state
             } else if (navMover) {
                 navMover.style.opacity = '0';
             }
@@ -282,17 +297,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentSectionId = 'home';
             } else {
                 const lastSection = sections[sections.length - 1];
-                if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 50) {
+                // Cek jika scroll sudah mencapai atau melewati bagian paling bawah dari section terakhir
+                if (window.scrollY + window.innerHeight >= lastSection.offsetTop + lastSection.offsetHeight - headerHeight) {
+                    currentSectionId = lastSection.getAttribute('id');
+                } else if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 50) { // Jika di paling bawah halaman
                     currentSectionId = lastSection.getAttribute('id');
                 }
             }
-        } else if (!currentSectionId && sections.length === 0 && window.scrollY < 50) {
+        } else if (!currentSectionId && sections.length === 0 && window.scrollY < 50) { // Jika tidak ada section dan di paling atas
             currentSectionId = 'home';
         }
+
 
         const newActiveLink = document.querySelector(`.nav-link-fresh[href="#${currentSectionId}"]`);
         if (newActiveLink && newActiveLink !== currentActiveLink) {
             updateActiveLinkStyles(newActiveLink);
+        } else if (newActiveLink && newActiveLink === currentActiveLink) {
+            // Jika link aktif saat ini sudah benar, pastikan mover tetap di posisinya
+            // Ini penting jika mouseleave dari navContainer saat section yang sama masih aktif
+            if (navMover && !navContainer.matches(':hover')) {
+                positionMover(currentActiveLink);
+            }
         }
     }
 
@@ -314,10 +339,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 mainHeader.classList.add('scrolled');
                 if (logoTextElement) logoTextElement.style.color = scrollLogoColor;
                 if (navContainerElement) navContainerElement.style.backgroundColor = scrollNavBg;
+                // Mover tidak lagi disembunyikan secara eksplisit di sini
             } else {
                 mainHeader.classList.remove('scrolled');
                 if (logoTextElement) logoTextElement.style.color = initialLogoColor;
                 if (navContainerElement) navContainerElement.style.backgroundColor = initialNavBg;
+                // Mover akan diposisikan ulang oleh updateActiveLinkOnScroll atau mouseleave
             }
         });
     }
