@@ -289,7 +289,7 @@ body.no-scroll {
 #main-header {
     background-color: var(--color-header-bg-transparent);
     transition: background-color 0.3s ease-in-out;
-    /* z-index: 50; sudah dari HTML, akan di-override oleh chatbox overlay jika perlu */
+    /* z-index: 40; Disesuaikan agar di bawah overlay chatbox */
 }
 
 #main-header.scrolled {
@@ -619,17 +619,11 @@ body.no-scroll {
 #chatbox-overlay {
     position: fixed;
     inset: 0;
-    /* top, right, bottom, left = 0 */
     background-color: rgba(0, 0, 0, 0.3);
-    /* Hitam semi-transparan */
     backdrop-filter: blur(4px);
-    /* Efek blur, sesuaikan nilai blur jika perlu */
     -webkit-backdrop-filter: blur(4px);
-    /* Untuk Safari */
     z-index: 1000;
-    /* Di bawah chatbox, di atas konten halaman */
     display: none;
-    /* Awalnya disembunyikan */
     opacity: 0;
     transition: opacity 0.3s ease-out;
 }
@@ -680,12 +674,9 @@ body.no-scroll {
     transform: translate(-50%, -50%) scale(0.95);
     width: 90vw;
     max-width: 340px;
-    /* Diperkecil lagi untuk mobile */
     height: 70vh;
     max-height: 500px;
-    /* Diperkecil lagi untuk mobile */
     background-color: rgba(255, 255, 255, 0.9);
-    /* Latar belakang sedikit lebih solid */
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-radius: 20px;
