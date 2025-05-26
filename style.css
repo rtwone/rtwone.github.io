@@ -294,32 +294,36 @@ body.no-scroll {
 }
 
 #main-header.scrolled {
-    /* Header utama tidak memiliki background atau shadow */
+    /* Header utama tidak memiliki background, hanya shadow dari container di dalamnya */
 }
 
+/* Kontainer di dalam header yang akan mendapat background biru saat scroll */
 #main-header.scrolled>.container {
     background-color: var(--color-header-container-bg-scroll);
     border-radius: 9999px;
     /* Bentuk pil penuh */
-    padding-top: 0.3rem;
-    /* Disesuaikan agar lebih pas dengan nav-fresh-container */
-    padding-bottom: 0.3rem;
-    padding-left: 0.3rem;
-    padding-right: 0.3rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    /* Padding default untuk mobile (lebih kecil) */
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-top: 0.25rem;
+    /* Margin atas bawah lebih kecil untuk mobile */
+    margin-bottom: 0.25rem;
     transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 4px 12px var(--color-nav-container-shadow);
-    display: inline-block;
-    /* Agar lebarnya mengikuti konten di dalamnya */
-    /* Untuk memusatkan, kita perlu wrapper tambahan di HTML atau styling pada parent #main-header */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Shadow pada container biru */
 }
 
-/* Media query untuk desktop, padding bisa lebih besar */
+/* Pada layar sm ke atas, kembalikan padding dan margin ke nilai semula */
 @media (min-width: 640px) {
     #main-header.scrolled>.container {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
     }
 }
 
@@ -330,6 +334,8 @@ body.no-scroll {
 
 #main-header.scrolled .nav-fresh-container {
     background-color: var(--color-nav-container-scroll-bg);
+    /* Shadow pada nav-fresh-container mungkin tidak diperlukan jika container biru sudah punya shadow */
+    /* box-shadow: none;  atau sesuaikan var(--color-nav-container-shadow) */
 }
 
 
