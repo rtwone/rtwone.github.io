@@ -180,22 +180,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function updateActiveLinkStyles(activeLinkElement) {
+    // Fungsi ini hanya mengurus kelas untuk styling teks
+    function updateLinkTextStyles(activeLinkElement) {
         navLinks.forEach(l => {
             l.classList.remove('active', 'active-state', 'hover-state');
         });
         if (activeLinkElement) {
             activeLinkElement.classList.add('active', 'active-state');
             currentActiveLink = activeLinkElement;
-            if (navContainer && !navContainer.matches(':hover')) {
-                positionMover(activeLinkElement);
-            }
         }
     }
 
     function handleNavLinkClick(linkElement, event) {
         if (event) event.preventDefault();
-        updateActiveLinkStyles(linkElement);
+        updateLinkTextStyles(linkElement); // Update kelas teks
+        positionMover(linkElement); // Selalu posisikan mover saat klik
 
         const targetId = linkElement.getAttribute('href');
         const targetElement = document.querySelector(targetId);
@@ -216,10 +215,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
     if (currentActiveLink && navMover) {
         setTimeout(() => {
-            updateActiveLinkStyles(currentActiveLink);
+            updateLinkTextStyles(currentActiveLink);
+            positionMover(currentActiveLink); // Posisikan mover di awal
         }, 150);
     }
 
@@ -291,11 +290,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const newActiveLink = document.querySelector(`.nav-link-fresh[href="#${currentSectionId}"]`);
-        if (newActiveLink && newActiveLink !== currentActiveLink) {
-            updateActiveLinkStyles(newActiveLink);
-        } else if (newActiveLink && newActiveLink === currentActiveLink) {
+        if (newActiveLink) {
+            if (newActiveLink !== currentActiveLink) {
+                updateLinkTextStyles(newActiveLink); // Update kelas teks
+            }
+            // Selalu update posisi mover ke link yang sesuai dengan section saat scroll,
+            // kecuali jika mouse sedang hover di atas navigasi (untuk memprioritaskan efek hover)
             if (navMover && navContainer && !navContainer.matches(':hover')) {
-                positionMover(currentActiveLink);
+                positionMover(newActiveLink);
             }
         }
     }
@@ -323,8 +325,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (logoTextElement) logoTextElement.style.color = initialLogoColor;
                 if (navContainerElement) navContainerElement.style.backgroundColor = initialNavBg;
             }
+            // Pembaruan posisi mover saat scroll sudah ditangani oleh updateActiveLinkOnScroll
         });
     }
+
 
     // --- AWAL LOGIKA CHATBOX (Mobile & Desktop) ---
     const chatboxOverlay = document.getElementById('chatbox-overlay');
@@ -503,15 +507,8 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
                 sendButton.disabled = false;
                 sendButton.innerHTML = originalButtonContent;
             }
-            // Jangan fokus otomatis pada input field di mobile setelah mengirim pesan
-            // if(inputField && !chatboxContainer.classList.contains('md:hidden')) inputField.focus(); 
-            if (inputField && (inputField.id === 'desktop-chat-input' || (inputField.id === 'chatbox-input' && chatboxContainer.classList.contains('open')))) {
-                // Fokus hanya jika chatbox desktop atau mobile chatbox yang terbuka sedang digunakan
-                // dan untuk mobile, hanya jika inputnya sendiri yang memicu send (misal: enter)
-                // Untuk mobile, kita nonaktifkan auto-focus setelah send untuk mencegah keyboard muncul lagi
-                if (inputField.id === 'desktop-chat-input') {
-                    inputField.focus();
-                }
+            if (inputField && (inputField.id === 'desktop-chat-input')) {
+                inputField.focus();
             }
         }
     }
@@ -543,7 +540,6 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
 
             if (chatboxContainer.classList.contains('open')) {
                 chatboxToggle.innerHTML = '<i class="fas fa-times"></i>';
-                // HAPUS: if (mobileChatInput) mobileChatInput.focus(); // Jangan auto-focus di mobile
             } else {
                 chatboxToggle.innerHTML = '<i class="fas fa-comments"></i>';
             }
