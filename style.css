@@ -291,64 +291,45 @@ body.no-scroll {
     background-color: var(--color-header-bg-transparent);
     transition: background-color 0.3s ease-in-out;
     z-index: 40;
+    /* Untuk memusatkan .container di dalamnya saat di-scroll */
+    display: flex;
+    justify-content: center;
 }
 
 #main-header.scrolled {
-    /* Header utama tidak memiliki background atau shadow */
+    /* Tidak ada background atau shadow di sini lagi */
 }
 
+/* Kontainer di dalam header yang akan mendapat background biru saat scroll */
 #main-header>.container {
-    /* Target container di dalam header */
-    /* Default untuk mobile saat tidak di-scroll (mengikuti HTML) */
-    /* Saat di-scroll, style di bawah akan diterapkan */
+    /* Default untuk mobile (tidak ada background biru) */
+    transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+    width: auto;
+    /* Agar bisa di-center oleh parent flex */
 }
 
 #main-header.scrolled>.container {
     background-color: var(--color-header-container-bg-scroll);
     border-radius: 9999px;
-    padding-top: 0.2rem;
-    /* Padding lebih kecil untuk mobile */
-    padding-bottom: 0.2rem;
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
-    transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.25rem;
+    /* Padding horizontal lebih kecil untuk mobile */
+    padding-right: 0.25rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: inline-flex;
-    /* Agar lebarnya mengikuti konten (navigasi) */
-    /* Untuk memusatkan container biru ini, kita perlu wrapper tambahan di HTML atau styling pada parentnya */
-    /* Jika #main-header adalah flex parent, kita bisa center dari sana */
-    /* Atau jika #main-header.scrolled > .container adalah satu-satunya child, kita bisa atur margin auto */
-    /* Namun, karena #main-header sudah fixed, kita atur agar container ini center di dalam header */
-    position: relative;
-    /* Agar bisa di-transform */
-    left: 50%;
-    transform: translateX(-50%);
+    /* display: inline-flex; Dihapus, biarkan flex dari parent yang mengatur */
+    /* left: 50%; transform: translateX(-50%); Dihapus, pemusatan via parent */
 }
 
-/* Pada layar sm ke atas, kembalikan padding dan margin ke nilai semula untuk desktop */
+/* Pada layar sm ke atas, kembalikan padding untuk desktop */
 @media (min-width: 640px) {
     #main-header.scrolled>.container {
-        display: flex;
-        /* Kembali ke flex untuk desktop agar logo dan nav sejajar */
-        justify-content: space-between;
-        /* Kembalikan space-between */
-        align-items: center;
-        width: auto;
-        /* Lebar otomatis agar bisa di-center oleh mx-auto di HTML */
-        max-width: none;
-        /* Hapus max-width jika ada */
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
         padding-left: 1rem;
         padding-right: 1rem;
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-        left: auto;
-        /* Hapus positioning absolut */
-        transform: none;
-        /* Hapus transform */
     }
 }
 
@@ -363,9 +344,10 @@ body.no-scroll {
         display: none;
     }
 
-    /* Pastikan container navigasi terpusat jika logo hilang */
+    /* Pastikan kontainer navigasi terpusat jika logo hilang */
     #main-header.scrolled>.container {
-        justify-content: center;
+        /* justify-content: center; -> ini untuk flex children, .container itu sendiri yang perlu di-center */
+        /* Kita sudah atur #main-header jadi flex dan justify-center */
     }
 }
 
