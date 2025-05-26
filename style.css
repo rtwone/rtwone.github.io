@@ -609,25 +609,20 @@ body {
 }
 
 
-/* Chatbox Styles Fresh (Responsif) */
+/* Chatbox Styles Fresh (Responsif - Ukuran Diperkecil untuk Mobile) */
 .chatbox-toggle-fresh {
     position: fixed;
     bottom: 1rem;
-    /* Disesuaikan untuk mobile */
     right: 1rem;
-    /* Disesuaikan untuk mobile */
     background-color: var(--color-chatbox-toggle-bg-fresh);
     color: var(--color-chatbox-text-on-primary-bg-fresh);
     width: 50px;
-    /* Sedikit lebih kecil di mobile */
     height: 50px;
-    /* Sedikit lebih kecil di mobile */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    /* Sedikit lebih kecil di mobile */
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     z-index: 1002;
@@ -652,18 +647,16 @@ body {
 
 .chatbox-container-fresh {
     position: fixed;
-    bottom: 1rem;
-    /* Disesuaikan untuk mobile */
+    bottom: calc(1rem + 50px + 10px);
+    /* bottom toggle + tinggi toggle + sedikit jarak */
     right: 1rem;
-    /* Disesuaikan untuk mobile */
     width: calc(100vw - 2rem);
-    /* Lebar penuh dengan sedikit margin di mobile */
-    max-width: 400px;
-    /* Max-width untuk mobile, bisa disesuaikan */
-    height: 70vh;
+    max-width: 320px;
+    /* Max-width untuk mobile diperkecil lagi */
+    height: 60vh;
     /* Tinggi lebih fleksibel di mobile */
-    max-height: 500px;
-    /* Max-height untuk mobile */
+    max-height: 450px;
+    /* Max-height untuk mobile diperkecil lagi */
     background-color: white;
     border-radius: 15px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -696,15 +689,15 @@ body {
 .chatbox-header-fresh {
     background-color: var(--color-chatbox-header-bg-fresh);
     color: var(--color-chatbox-text-on-primary-bg-fresh);
-    padding: 12px 15px;
-    /* Padding disesuaikan */
+    padding: 10px 12px;
+    /* Padding header disesuaikan */
     font-weight: 600;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     /* Ukuran font header chatbox */
 }
 
@@ -712,36 +705,36 @@ body {
     background: none;
     border: none;
     color: var(--color-chatbox-text-on-primary-bg-fresh);
-    font-size: 18px;
-    /* Ukuran ikon close */
+    font-size: 16px;
+    /* Ukuran ikon close disesuaikan */
     cursor: pointer;
 }
 
 .chatbox-messages-fresh {
     flex-grow: 1;
-    padding: 10px 12px;
+    padding: 8px 10px;
     /* Padding disesuaikan */
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     /* Jarak antar bubble disesuaikan */
     background-color: #F9FAFB;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
 }
 
 .chat-message {
-    padding: 8px 12px;
+    padding: 6px 10px;
     /* Padding bubble disesuaikan */
-    border-radius: 12px;
+    border-radius: 10px;
     /* Radius bubble disesuaikan */
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     /* Margin bubble disesuaikan */
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     /* Ukuran font pesan */
-    line-height: 1.5;
+    line-height: 1.4;
     word-break: break-word;
-    max-width: 85%;
+    max-width: 88%;
     /* Max-width bubble agar tidak terlalu lebar di mobile */
 }
 
@@ -763,22 +756,23 @@ body {
     background-color: #f0f0f0;
     padding: 0.1em 0.3em;
     border-radius: 3px;
-    font-size: 0.85em;
+    font-size: 0.8em;
     /* Ukuran font kode disesuaikan */
 }
 
 .chat-message pre {
     background-color: #f0f0f0;
-    padding: 0.5em;
+    padding: 0.4em;
+    /* Padding pre disesuaikan */
     border-radius: 5px;
     overflow-x: auto;
-    margin: 0.5em 0;
+    margin: 0.4em 0;
 }
 
 .chat-message pre code {
     background-color: transparent;
     padding: 0;
-    font-size: 0.85em;
+    font-size: 0.8em;
     /* Ukuran font kode di pre disesuaikan */
 }
 
@@ -798,7 +792,7 @@ body {
 
 .chatbox-input-container-fresh {
     display: flex;
-    padding: 8px;
+    padding: 6px;
     /* Padding disesuaikan */
     border-top: 1px solid #e5e7eb;
     background-color: white;
@@ -809,12 +803,12 @@ body {
 .chatbox-input-fresh {
     flex-grow: 1;
     border: 1px solid #d1d5db;
-    padding: 8px 12px;
+    padding: 6px 10px;
     /* Padding input disesuaikan */
-    border-radius: 20px;
-    margin-right: 6px;
+    border-radius: 18px;
+    margin-right: 5px;
     /* Margin disesuaikan */
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     /* Ukuran font input */
 }
 
@@ -828,9 +822,9 @@ body {
     background-color: var(--color-chatbox-send-bg-fresh);
     color: var(--color-chatbox-text-on-primary-bg-fresh);
     border: none;
-    padding: 8px 12px;
+    padding: 6px 10px;
     /* Padding tombol send disesuaikan */
-    border-radius: 20px;
+    border-radius: 18px;
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.3s ease;
@@ -849,7 +843,7 @@ body {
 }
 
 .chatbox-send-fresh i {
-    font-size: 1rem;
+    font-size: 0.9rem;
     /* Ukuran ikon send */
 }
 
@@ -857,13 +851,13 @@ body {
 .ai-typing-indicator {
     background-color: #e2e8f0;
     color: var(--color-typing-dot);
-    padding: 8px 12px;
+    padding: 6px 10px;
     /* Padding disesuaikan */
-    border-radius: 12px;
+    border-radius: 10px;
     /* Radius disesuaikan */
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     /* Margin disesuaikan */
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     /* Ukuran font disesuaikan */
     line-height: 1;
     align-self: flex-start;
@@ -874,9 +868,9 @@ body {
 
 .ai-typing-indicator .typing-dot {
     display: inline-block;
-    width: 7px;
+    width: 6px;
     /* Ukuran titik disesuaikan */
-    height: 7px;
+    height: 6px;
     /* Ukuran titik disesuaikan */
     margin: 0 2px;
     background-color: var(--color-typing-dot);
@@ -906,7 +900,7 @@ body {
     }
 
     40% {
-        transform: translateY(-5px);
+        transform: translateY(-4px);
         /* Ketinggian pantulan disesuaikan */
     }
 }
