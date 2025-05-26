@@ -31,9 +31,10 @@
     </div>
 
     <div id="main-content" class="opacity-0">
-        <header class="fixed top-0 left-0 right-0 z-50 py-3 sm:py-4 transition-all duration-300 ease-in-out"
+        <header class="fixed top-0 left-0 right-0 z-50 py-4 sm:py-6 transition-all duration-300 ease-in-out"
             id="main-header">
-            <div class="container mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center">
+            <div
+                class="container mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
                 <a href="#home" id="logo-link"
                     class="text-xl sm:text-2xl font-extrabold logo-text-initial flex items-center cursor-pointer mb-2 sm:mb-0">
                     <span class="logo-icon-placeholder mr-2 text-2xl sm:text-3xl">😊</span>
@@ -188,6 +189,30 @@
             </div>
         </section>
 
+        <section id="desktop-chat-section" class="py-12 md:py-16 bg-gray-100 hidden md:block">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-3 section-title-fresh">Chat dengan AI Asisten
+                </h2>
+                <div class="text-center mb-8 md:mb-12">
+                    <span class="section-title-underline-fresh"></span>
+                </div>
+                <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+                    <div id="desktop-chat-header" class="chatbox-header-fresh">
+                        <span>Tanya Apapun Tentang Irfan!</span>
+                    </div>
+                    <div id="desktop-chat-messages" class="chatbox-messages-fresh" style="height: 400px;">
+                    </div>
+                    <div id="desktop-chat-input-container" class="chatbox-input-container-fresh">
+                        <input type="text" id="desktop-chat-input" class="chatbox-input-fresh"
+                            placeholder="Ketik pesan Anda...">
+                        <button id="desktop-chat-send" class="chatbox-send-fresh"><i
+                                class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
         <section id="contact" class="py-12 md:py-24 bg-contact-fresh text-white">
             <div class="container mx-auto px-4 sm:px-6">
                 <h2
@@ -221,18 +246,16 @@
                 <p>Dibuat dengan <i class="fas fa-heart text-accent-light-green"></i> dan Secangkir Kopi.</p>
             </div>
         </footer>
-
-        <div id="chatbox-toggle" class="chatbox-toggle-fresh">
+        <div id="chatbox-toggle" class="chatbox-toggle-fresh md:hidden">
             <i class="fas fa-comments"></i>
         </div>
 
-        <div id="chatbox-container" class="chatbox-container-fresh">
+        <div id="chatbox-container" class="chatbox-container-fresh md:hidden">
             <div id="chatbox-header" class="chatbox-header-fresh">
                 <span>AI Assistant</span>
                 <button id="close-chat" class="chatbox-close-fresh">&times;</button>
             </div>
             <div id="chatbox-messages" class="chatbox-messages-fresh">
-                <div class="chat-message ai-message">Hello! How can I help you today?</div>
             </div>
             <div id="chatbox-input-container" class="chatbox-input-container-fresh">
                 <input type="text" id="chatbox-input" class="chatbox-input-fresh" placeholder="Type your message...">
