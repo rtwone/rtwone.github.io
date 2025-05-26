@@ -291,45 +291,51 @@ body.no-scroll {
     background-color: var(--color-header-bg-transparent);
     transition: background-color 0.3s ease-in-out;
     z-index: 40;
-    /* Untuk memusatkan .container di dalamnya saat di-scroll */
     display: flex;
     justify-content: center;
+    align-items: center;
+    /* Pusatkan .container secara vertikal di dalam header */
+    width: 100%;
 }
 
 #main-header.scrolled {
-    /* Tidak ada background atau shadow di sini lagi */
+    /* Header utama tidak memiliki background, hanya shadow dari container di dalamnya */
 }
 
 /* Kontainer di dalam header yang akan mendapat background biru saat scroll */
 #main-header>.container {
-    /* Default untuk mobile (tidak ada background biru) */
     transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-radius 0.3s ease-in-out;
     width: auto;
-    /* Agar bisa di-center oleh parent flex */
+    /* Default agar bisa di-center oleh flex parent (#main-header) */
+    /* HTML class .container sudah punya mx-auto, tapi karena parentnya flex, ini tidak terlalu berpengaruh */
+    /* HTML class .container juga punya px-4 sm:px-6, ini akan menjadi padding *di dalam* background biru */
 }
 
 #main-header.scrolled>.container {
     background-color: var(--color-header-container-bg-scroll);
     border-radius: 9999px;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    padding-left: 0.25rem;
-    /* Padding horizontal lebih kecil untuk mobile */
-    padding-right: 0.25rem;
+    /* Padding untuk shape biru itu sendiri, di luar konten (logo & nav) */
+    padding: 0.25rem;
+    /* Padding sangat tipis untuk mobile agar shape biru pas */
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    /* display: inline-flex; Dihapus, biarkan flex dari parent yang mengatur */
-    /* left: 50%; transform: translateX(-50%); Dihapus, pemusatan via parent */
+    display: inline-flex;
+    /* Agar lebarnya mengikuti konten (navigasi saat logo hidden) */
+    align-items: center;
+    /* Memastikan konten di dalamnya (logo dan nav) terpusat vertikal */
 }
 
-/* Pada layar sm ke atas, kembalikan padding untuk desktop */
+/* Pada layar sm ke atas, kembalikan padding dan perilaku flex untuk desktop */
 @media (min-width: 640px) {
     #main-header.scrolled>.container {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        display: flex;
+        /* Kembali ke flex untuk layout desktop */
+        justify-content: space-between;
+        /* Untuk memisahkan logo dan nav */
+        padding: 0.5rem 1rem;
+        /* Padding lebih besar untuk desktop */
+        /* width: auto; akan mengambil lebar dari .container mx-auto di HTML */
     }
 }
 
@@ -344,10 +350,10 @@ body.no-scroll {
         display: none;
     }
 
-    /* Pastikan kontainer navigasi terpusat jika logo hilang */
+    /* Pastikan kontainer navigasi (yang menjadi satu-satunya child dari .container biru) terpusat */
     #main-header.scrolled>.container {
-        /* justify-content: center; -> ini untuk flex children, .container itu sendiri yang perlu di-center */
-        /* Kita sudah atur #main-header jadi flex dan justify-center */
+        justify-content: center;
+        /* Memusatkan .nav-fresh-container di dalam .container biru */
     }
 }
 
