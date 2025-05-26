@@ -289,7 +289,7 @@ body.no-scroll {
 #main-header {
     background-color: var(--color-header-bg-transparent);
     transition: background-color 0.3s ease-in-out;
-    /* z-index: 40; Disesuaikan agar di bawah overlay chatbox */
+    /* z-index: 40; sudah dari HTML */
 }
 
 #main-header.scrolled {
