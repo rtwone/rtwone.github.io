@@ -180,8 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Fungsi ini hanya mengurus kelas untuk styling teks
-    function updateLinkTextStyles(activeLinkElement) {
+    // Fungsi ini sekarang hanya mengurus kelas untuk styling teks dan status aktif
+    function updateLinkTextAndActiveClass(activeLinkElement) {
         navLinks.forEach(l => {
             l.classList.remove('active', 'active-state', 'hover-state');
         });
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleNavLinkClick(linkElement, event) {
         if (event) event.preventDefault();
-        updateLinkTextStyles(linkElement); // Update kelas teks
+        updateLinkTextAndActiveClass(linkElement);
         positionMover(linkElement); // Selalu posisikan mover saat klik
 
         const targetId = linkElement.getAttribute('href');
@@ -217,8 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (currentActiveLink && navMover) {
         setTimeout(() => {
-            updateLinkTextStyles(currentActiveLink);
-            positionMover(currentActiveLink); // Posisikan mover di awal
+            updateLinkTextAndActiveClass(currentActiveLink);
+            positionMover(currentActiveLink);
         }, 150);
     }
 
@@ -291,14 +291,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const newActiveLink = document.querySelector(`.nav-link-fresh[href="#${currentSectionId}"]`);
         if (newActiveLink) {
+            // Update kelas teks dan status aktif
             if (newActiveLink !== currentActiveLink) {
-                updateLinkTextStyles(newActiveLink); // Update kelas teks
+                updateLinkTextAndActiveClass(newActiveLink);
             }
             // Selalu update posisi mover ke link yang sesuai dengan section saat scroll,
-            // kecuali jika mouse sedang hover di atas navigasi (untuk memprioritaskan efek hover)
-            if (navMover && navContainer && !navContainer.matches(':hover')) {
-                positionMover(newActiveLink);
-            }
+            // ini akan memastikan mover mengikuti bahkan jika mouse tidak di atas navigasi.
+            positionMover(newActiveLink);
         }
     }
 
@@ -325,7 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (logoTextElement) logoTextElement.style.color = initialLogoColor;
                 if (navContainerElement) navContainerElement.style.backgroundColor = initialNavBg;
             }
-            // Pembaruan posisi mover saat scroll sudah ditangani oleh updateActiveLinkOnScroll
         });
     }
 
