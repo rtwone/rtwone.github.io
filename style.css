@@ -124,11 +124,14 @@ body {
     z-index: 9999;
     overflow: hidden;
     transition: opacity 0.5s ease-out 0.2s, visibility 0.5s ease-out 0.2s;
+    /* pointer-events: auto; Awalnya bisa diklik jika ada interaksi di loading screen */
 }
 
 #loading-screen.hidden {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
+    /* Tambahkan ini agar tidak menghalangi klik setelah disembunyikan */
 }
 
 .sky {
@@ -648,15 +651,11 @@ body {
 .chatbox-container-fresh {
     position: fixed;
     bottom: calc(1rem + 50px + 10px);
-    /* bottom toggle + tinggi toggle + sedikit jarak */
     right: 1rem;
     width: calc(100vw - 2rem);
     max-width: 320px;
-    /* Max-width untuk mobile diperkecil lagi */
     height: 60vh;
-    /* Tinggi lebih fleksibel di mobile */
     max-height: 450px;
-    /* Max-height untuk mobile diperkecil lagi */
     background-color: white;
     border-radius: 15px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -690,7 +689,6 @@ body {
     background-color: var(--color-chatbox-header-bg-fresh);
     color: var(--color-chatbox-text-on-primary-bg-fresh);
     padding: 10px 12px;
-    /* Padding header disesuaikan */
     font-weight: 600;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -698,7 +696,6 @@ body {
     justify-content: space-between;
     align-items: center;
     font-size: 0.9rem;
-    /* Ukuran font header chatbox */
 }
 
 .chatbox-close-fresh {
@@ -706,41 +703,31 @@ body {
     border: none;
     color: var(--color-chatbox-text-on-primary-bg-fresh);
     font-size: 16px;
-    /* Ukuran ikon close disesuaikan */
     cursor: pointer;
 }
 
 .chatbox-messages-fresh {
     flex-grow: 1;
     padding: 8px 10px;
-    /* Padding disesuaikan */
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 6px;
-    /* Jarak antar bubble disesuaikan */
     background-color: #F9FAFB;
     padding-bottom: 10px;
 }
 
 .chat-message {
     padding: 6px 10px;
-    /* Padding bubble disesuaikan */
     border-radius: 10px;
-    /* Radius bubble disesuaikan */
     margin-bottom: 5px;
-    /* Margin bubble disesuaikan */
     font-size: 0.85rem;
-    /* Ukuran font pesan */
     line-height: 1.4;
     word-break: break-word;
     max-width: 88%;
-    /* Max-width bubble agar tidak terlalu lebar di mobile */
 }
 
 @media (min-width: 640px) {
-
-    /* sm breakpoint */
     .chat-message {
         padding: 10px 15px;
         border-radius: 15px;
@@ -757,13 +744,11 @@ body {
     padding: 0.1em 0.3em;
     border-radius: 3px;
     font-size: 0.8em;
-    /* Ukuran font kode disesuaikan */
 }
 
 .chat-message pre {
     background-color: #f0f0f0;
     padding: 0.4em;
-    /* Padding pre disesuaikan */
     border-radius: 5px;
     overflow-x: auto;
     margin: 0.4em 0;
@@ -773,7 +758,6 @@ body {
     background-color: transparent;
     padding: 0;
     font-size: 0.8em;
-    /* Ukuran font kode di pre disesuaikan */
 }
 
 .chat-message.user-message {
@@ -793,7 +777,6 @@ body {
 .chatbox-input-container-fresh {
     display: flex;
     padding: 6px;
-    /* Padding disesuaikan */
     border-top: 1px solid #e5e7eb;
     background-color: white;
     border-bottom-left-radius: 15px;
@@ -804,12 +787,9 @@ body {
     flex-grow: 1;
     border: 1px solid #d1d5db;
     padding: 6px 10px;
-    /* Padding input disesuaikan */
     border-radius: 18px;
     margin-right: 5px;
-    /* Margin disesuaikan */
     font-size: 0.85rem;
-    /* Ukuran font input */
 }
 
 .chatbox-input-fresh:focus {
@@ -823,7 +803,6 @@ body {
     color: var(--color-chatbox-text-on-primary-bg-fresh);
     border: none;
     padding: 6px 10px;
-    /* Padding tombol send disesuaikan */
     border-radius: 18px;
     cursor: pointer;
     font-weight: 500;
@@ -844,7 +823,6 @@ body {
 
 .chatbox-send-fresh i {
     font-size: 0.9rem;
-    /* Ukuran ikon send */
 }
 
 /* Style untuk AI Typing Indicator (dengan animasi titik baru) */
@@ -852,13 +830,9 @@ body {
     background-color: #e2e8f0;
     color: var(--color-typing-dot);
     padding: 6px 10px;
-    /* Padding disesuaikan */
     border-radius: 10px;
-    /* Radius disesuaikan */
     margin-bottom: 5px;
-    /* Margin disesuaikan */
     font-size: 0.85rem;
-    /* Ukuran font disesuaikan */
     line-height: 1;
     align-self: flex-start;
     max-width: 80%;
@@ -869,9 +843,7 @@ body {
 .ai-typing-indicator .typing-dot {
     display: inline-block;
     width: 6px;
-    /* Ukuran titik disesuaikan */
     height: 6px;
-    /* Ukuran titik disesuaikan */
     margin: 0 2px;
     background-color: var(--color-typing-dot);
     border-radius: 50%;
@@ -901,6 +873,5 @@ body {
 
     40% {
         transform: translateY(-4px);
-        /* Ketinggian pantulan disesuaikan */
     }
 }

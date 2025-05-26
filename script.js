@@ -4,12 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loadingScreen = document.getElementById('loading-screen');
     const mainContent = document.getElementById('main-content');
-    let engineSound;
 
     const airplaneAnimationDuration = 4000;
     const totalLoadingDuration = airplaneAnimationDuration + 500;
     const fadeOutTransition = 500;
-    const soundStopDelay = 200;
 
     // Network Canvas Animation (bagian hero section)
     let startNetworkAnimation;
@@ -117,33 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
             airplaneContainer.style.animationDuration = `${airplaneAnimationDuration / 1000}s`;
         }
 
-        Tone.start().then(() => {
-            if (typeof Tone !== 'undefined' && Tone.NoiseSynth && Tone.AutoFilter) {
-                engineSound = new Tone.NoiseSynth({
-                    noise: { type: 'brown', playbackRate: 0.45 },
-                    envelope: { attack: 1.5, decay: 1, sustain: 0.8, release: 1.5 },
-                    volume: -18
-                }).toDestination();
-
-                const filter = new Tone.AutoFilter({
-                    frequency: "8m",
-                    baseFrequency: 180,
-                    octaves: 2.8
-                }).toDestination().start();
-                engineSound.connect(filter);
-                if (typeof engineSound.triggerAttack === 'function') {
-                    engineSound.triggerAttack();
-                }
-            }
-        }).catch(e => {
-            // console.warn("Tone.js AudioContext could not be started automatically.", e);
-        });
-
         setTimeout(() => {
             console.log("Timeout untuk loading screen selesai.");
-            if (engineSound && typeof engineSound.triggerRelease === 'function') {
-                engineSound.triggerRelease();
-            }
 
             loadingScreen.classList.add('hidden');
             console.log("Kelas 'hidden' ditambahkan ke loading screen.");
@@ -183,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMover = document.querySelector('.nav-mover');
     let currentActiveLink = document.querySelector('.nav-link-fresh.active');
     const sections = [];
+    const logoLink = document.getElementById('logo-link');
 
     navLinks.forEach(link => {
         const sectionId = link.getAttribute('href');
@@ -200,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navMover.style.width = targetLink.offsetWidth + 'px';
             navMover.style.height = targetLink.offsetHeight + 'px';
             navMover.style.top = targetLink.offsetTop + 'px';
-            navMover.style.opacity = '1'; // Selalu tampilkan mover jika ada targetLink
+            navMover.style.opacity = '1';
         } else if (navMover) {
             navMover.style.opacity = '0';
         }
@@ -213,12 +187,32 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeLinkElement) {
             activeLinkElement.classList.add('active', 'active-state');
             currentActiveLink = activeLinkElement;
-            // Selalu panggil positionMover ketika link aktif berubah,
-            // kecuali jika mouse sedang hover di atas link LAIN (untuk efek hover).
-            const isHoveringAnotherLink = Array.from(navLinks).some(link => link.classList.contains('hover-state') && link !== activeLinkElement);
-            if (!isHoveringAnotherLink) {
+            if (navContainer && !navContainer.matches(':hover')) {
                 positionMover(activeLinkElement);
             }
+        }
+    }
+
+    function handleNavLinkClick(linkElement, event) {
+        if (event) event.preventDefault();
+        updateActiveLinkStyles(linkElement);
+
+        const targetId = linkElement.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            const headerOffset = mainHeader ? mainHeader.offsetHeight : 0;
+            let offsetPosition;
+            if (targetId === '#home') {
+                offsetPosition = 0;
+            } else {
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                offsetPosition = elementPosition + window.scrollY - headerOffset - 20;
+            }
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
     }
 
@@ -231,26 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navLinks.forEach(link => {
         link.addEventListener('click', function (e) {
-            e.preventDefault();
-            updateActiveLinkStyles(this); // Ini akan memanggil positionMover
-
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                const headerOffset = mainHeader ? mainHeader.offsetHeight : 0;
-                let offsetPosition;
-                if (targetId === '#home') {
-                    offsetPosition = 0;
-                } else {
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    offsetPosition = elementPosition + window.scrollY - headerOffset - 20;
-                }
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
+            handleNavLinkClick(this, e);
         });
 
         link.addEventListener('mouseenter', function () {
@@ -267,12 +242,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    if (logoLink) {
+        logoLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            const homeNavLink = document.querySelector('.nav-link-fresh[href="#home"]');
+            if (homeNavLink) {
+                handleNavLinkClick(homeNavLink);
+            }
+        });
+    }
+
     if (navContainer) {
         navContainer.addEventListener('mouseleave', () => {
             if (currentActiveLink && navMover) {
                 positionMover(currentActiveLink);
                 navLinks.forEach(l => l.classList.remove('hover-state'));
-                if (currentActiveLink) currentActiveLink.classList.add('active-state'); // Pastikan link aktif tetap active-state
+                if (currentActiveLink) currentActiveLink.classList.add('active-state');
             } else if (navMover) {
                 navMover.style.opacity = '0';
             }
@@ -297,25 +282,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentSectionId = 'home';
             } else {
                 const lastSection = sections[sections.length - 1];
-                // Cek jika scroll sudah mencapai atau melewati bagian paling bawah dari section terakhir
-                if (window.scrollY + window.innerHeight >= lastSection.offsetTop + lastSection.offsetHeight - headerHeight) {
-                    currentSectionId = lastSection.getAttribute('id');
-                } else if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 50) { // Jika di paling bawah halaman
+                if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 50) {
                     currentSectionId = lastSection.getAttribute('id');
                 }
             }
-        } else if (!currentSectionId && sections.length === 0 && window.scrollY < 50) { // Jika tidak ada section dan di paling atas
+        } else if (!currentSectionId && sections.length === 0 && window.scrollY < 50) {
             currentSectionId = 'home';
         }
-
 
         const newActiveLink = document.querySelector(`.nav-link-fresh[href="#${currentSectionId}"]`);
         if (newActiveLink && newActiveLink !== currentActiveLink) {
             updateActiveLinkStyles(newActiveLink);
         } else if (newActiveLink && newActiveLink === currentActiveLink) {
-            // Jika link aktif saat ini sudah benar, pastikan mover tetap di posisinya
-            // Ini penting jika mouseleave dari navContainer saat section yang sama masih aktif
-            if (navMover && !navContainer.matches(':hover')) {
+            if (navMover && navContainer && !navContainer.matches(':hover')) {
                 positionMover(currentActiveLink);
             }
         }
@@ -339,24 +318,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 mainHeader.classList.add('scrolled');
                 if (logoTextElement) logoTextElement.style.color = scrollLogoColor;
                 if (navContainerElement) navContainerElement.style.backgroundColor = scrollNavBg;
-                // Mover tidak lagi disembunyikan secara eksplisit di sini
             } else {
                 mainHeader.classList.remove('scrolled');
                 if (logoTextElement) logoTextElement.style.color = initialLogoColor;
                 if (navContainerElement) navContainerElement.style.backgroundColor = initialNavBg;
-                // Mover akan diposisikan ulang oleh updateActiveLinkOnScroll atau mouseleave
             }
         });
     }
 
+    // --- AWAL LOGIKA CHATBOX (Mobile & Desktop) ---
 
-    // Chatbox Logic
+    // Deklarasi elemen chatbox di awal blok logika chatbox
     const chatboxToggle = document.getElementById('chatbox-toggle');
     const chatboxContainer = document.getElementById('chatbox-container');
     const closeChatButton = document.getElementById('close-chat');
-    const chatboxMessages = document.getElementById('chatbox-messages');
-    const chatboxInput = document.getElementById('chatbox-input');
-    const chatboxSendButton = document.getElementById('chatbox-send');
+    const mobileChatMessages = document.getElementById('chatbox-messages'); // Untuk floating chatbox
+    const mobileChatInput = document.getElementById('chatbox-input');
+    const mobileChatSendButton = document.getElementById('chatbox-send');
+
+    const desktopChatMessages = document.getElementById('desktop-chat-messages');
+    const desktopChatInput = document.getElementById('desktop-chat-input');
+    const desktopChatSendButton = document.getElementById('desktop-chat-send');
 
     const systemInstructions = `Anda adalah asisten AI yang ramah dan informatif untuk portofolio milik Irfan Hariyanto.
 Tujuan utama Anda adalah membantu pengunjung memahami lebih lanjut tentang Irfan, keahliannya, proyek-proyeknya, dan cara menghubunginya.
@@ -372,13 +354,13 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
 
     const initialAiGreeting = "Halo! Saya adalah asisten AI untuk portofolio Irfan Hariyanto. Ada yang bisa saya bantu tanyakan mengenai Irfan atau karyanya?";
 
-    let chatHistory = [
-        { role: "user", parts: [{ text: systemInstructions }] },
-        { role: "model", parts: [{ text: initialAiGreeting }] }
-    ];
-
-    function addMessageToChatbox(text, sender) {
-        if (!chatboxMessages) return;
+    // Fungsi-fungsi pembantu chatbox didefinisikan sebelum digunakan
+    function addMessageToChatUI(text, sender, messagesContainerEl) {
+        if (!messagesContainerEl) {
+            // console.error(`Target messages container tidak ditemukan untuk sender: ${sender}. Pesan: ${text}`);
+            return;
+        }
+        // console.log(`Menambahkan pesan ke ${messagesContainerEl.id || 'kontainer tanpa id'}: "${text.substring(0,30)}..." dari ${sender}`);
         const messageElement = document.createElement('div');
         messageElement.classList.add('chat-message', sender === 'user' ? 'user-message' : 'ai-message');
 
@@ -415,42 +397,143 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
                         messageElement.innerHTML += formattedText[i];
                         i++;
                     }
-                    if (chatboxMessages) chatboxMessages.scrollTop = chatboxMessages.scrollHeight;
+                    messagesContainerEl.scrollTop = messagesContainerEl.scrollHeight;
                     setTimeout(typeCharacter, typingSpeed);
                 }
             }
             typeCharacter();
-
         } else {
             messageElement.textContent = text;
-            if (chatboxMessages) chatboxMessages.scrollTop = chatboxMessages.scrollHeight;
+            messagesContainerEl.scrollTop = messagesContainerEl.scrollHeight;
         }
-        if (chatboxMessages) chatboxMessages.appendChild(messageElement);
+        messagesContainerEl.appendChild(messageElement);
     }
 
-    if (chatboxMessages) {
-        chatboxMessages.innerHTML = '';
-        addMessageToChatbox(initialAiGreeting, 'ai');
+    function showTypingIndicatorIn(messagesContainerEl) {
+        if (!messagesContainerEl) return null;
+        removeTypingIndicatorFrom(messagesContainerEl);
+        const typingIndicator = document.createElement('div');
+        typingIndicator.classList.add('ai-typing-indicator');
+        for (let i = 0; i < 4; i++) {
+            const dot = document.createElement('span');
+            dot.classList.add('typing-dot');
+            typingIndicator.appendChild(dot);
+        }
+        messagesContainerEl.appendChild(typingIndicator);
+        messagesContainerEl.scrollTop = messagesContainerEl.scrollHeight;
+        return typingIndicator;
     }
 
+    function removeTypingIndicatorFrom(messagesContainerEl) {
+        if (messagesContainerEl) {
+            const typingIndicator = messagesContainerEl.querySelector('.ai-typing-indicator');
+            if (typingIndicator) {
+                messagesContainerEl.removeChild(typingIndicator);
+            }
+        }
+    }
 
-    if (!chatboxToggle || !chatboxContainer || !closeChatButton || !chatboxMessages || !chatboxInput || !chatboxSendButton) {
-        console.warn('Satu atau lebih elemen chatbox tidak ditemukan. Fungsi inti chatbox mungkin terganggu.');
-    } else {
-        console.log("Semua elemen chatbox ditemukan. Event listener akan ditambahkan.");
+    async function handleSendMessage(inputText, currentChatHistory, messagesContainer, inputField, sendButton) {
+        const userMessageText = inputText.trim();
+        if (userMessageText === '') return;
+
+        addMessageToChatUI(userMessageText, 'user', messagesContainer);
+        currentChatHistory.push({ role: "user", parts: [{ text: userMessageText }] });
+        if (inputField) inputField.value = '';
+        if (sendButton) sendButton.disabled = true;
+
+        const originalButtonContent = sendButton ? sendButton.innerHTML : '';
+        if (sendButton) sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+        const typingIndicator = showTypingIndicatorIn(messagesContainer);
+
+        try {
+            const apiKey = "AIzaSyBm0uMkgPJpiG04snGbXAQNmsISivlQ8mw";
+            if (!apiKey) {
+                addMessageToChatUI('Error: API Key belum dikonfigurasi.', 'ai', messagesContainer);
+                console.error("API Key is not configured in script.js.");
+                if (sendButton) {
+                    sendButton.disabled = false;
+                    sendButton.innerHTML = originalButtonContent;
+                }
+                removeTypingIndicatorFrom(messagesContainer);
+                return;
+            }
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            const payload = { contents: currentChatHistory };
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            removeTypingIndicatorFrom(messagesContainer);
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error dari API:', errorData);
+                const displayError = errorData?.error?.message || `Gagal menghubungi AI. Status: ${response.status}`;
+                addMessageToChatUI(displayError, 'ai', messagesContainer);
+                currentChatHistory.push({ role: "model", parts: [{ text: displayError }] });
+                return;
+            }
+
+            const result = await response.json();
+
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const aiResponseText = result.candidates[0].content.parts[0].text;
+                addMessageToChatUI(aiResponseText, 'ai', messagesContainer);
+                currentChatHistory.push({ role: "model", parts: [{ text: aiResponseText }] });
+            } else if (result.candidates && result.candidates.length > 0 && result.candidates[0].finishReason === "SAFETY") {
+                const safetyMessage = "Respons saya diblokir karena alasan keamanan. Silakan coba pertanyaan lain.";
+                addMessageToChatUI(safetyMessage, 'ai', messagesContainer);
+                currentChatHistory.push({ role: "model", parts: [{ text: safetyMessage }] });
+            }
+            else {
+                console.error('Struktur respons tidak diharapkan:', result);
+                addMessageToChatUI('Maaf, saya tidak dapat memproses permintaan Anda saat ini (format respons tidak sesuai).', 'ai', messagesContainer);
+                currentChatHistory.push({ role: "model", parts: [{ text: 'Maaf, saya tidak dapat memproses permintaan Anda saat ini (format respons tidak sesuai).' }] });
+            }
+
+        } catch (error) {
+            console.error('Error saat memanggil Gemini API:', error);
+            removeTypingIndicatorFrom(messagesContainer);
+            addMessageToChatUI(`Maaf, terjadi masalah: ${error.message}`, 'ai', messagesContainer);
+        } finally {
+            if (sendButton) {
+                sendButton.disabled = false;
+                sendButton.innerHTML = originalButtonContent;
+            }
+            if (inputField) inputField.focus();
+        }
+    }
+
+    // Inisialisasi Chatbox Mobile (Floating)
+    if (chatboxToggle && chatboxContainer && closeChatButton && mobileChatMessages && mobileChatInput && mobileChatSendButton) {
+        console.log("Inisialisasi chatbox mobile.");
+        let mobileChatHistory = [
+            { role: "user", parts: [{ text: systemInstructions }] },
+            { role: "model", parts: [{ text: initialAiGreeting }] }
+        ];
+
+        mobileChatMessages.innerHTML = '';
+        addMessageToChatUI(initialAiGreeting, 'ai', mobileChatMessages);
+
         chatboxToggle.addEventListener('click', (event) => {
             event.stopPropagation();
-            console.log("Tombol chatbox toggle DIKLIK!");
             chatboxContainer.classList.toggle('open');
             if (chatboxContainer.classList.contains('open')) {
                 chatboxToggle.innerHTML = '<i class="fas fa-times"></i>';
-                if (chatboxInput) chatboxInput.focus();
+                if (mobileChatInput) mobileChatInput.focus();
             } else {
                 chatboxToggle.innerHTML = '<i class="fas fa-comments"></i>';
             }
         });
         closeChatButton.addEventListener('click', () => {
-            console.log("Tombol close chatbox di header DIKLIK!");
             chatboxContainer.classList.remove('open');
             chatboxToggle.innerHTML = '<i class="fas fa-comments"></i>';
         });
@@ -464,112 +547,44 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
             }
         });
 
-        function showTypingIndicator() {
-            removeTypingIndicator();
-            const typingIndicator = document.createElement('div');
-            typingIndicator.classList.add('ai-typing-indicator');
-
-            for (let i = 0; i < 4; i++) {
-                const dot = document.createElement('span');
-                dot.classList.add('typing-dot');
-                typingIndicator.appendChild(dot);
-            }
-
-            if (chatboxMessages) chatboxMessages.appendChild(typingIndicator);
-            if (chatboxMessages) chatboxMessages.scrollTop = chatboxMessages.scrollHeight;
-            return typingIndicator;
-        }
-
-        function removeTypingIndicator() {
-            if (chatboxMessages) {
-                const typingIndicator = chatboxMessages.querySelector('.ai-typing-indicator');
-                if (typingIndicator) {
-                    chatboxMessages.removeChild(typingIndicator);
-                }
-            }
-        }
-
-        async function sendMessage() {
-            const userMessageText = chatboxInput.value.trim();
-            if (userMessageText === '') return;
-
-            addMessageToChatbox(userMessageText, 'user');
-            chatHistory.push({ role: "user", parts: [{ text: userMessageText }] });
-            chatboxInput.value = '';
-            chatboxSendButton.disabled = true;
-            const originalButtonContent = chatboxSendButton.innerHTML;
-            chatboxSendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-            showTypingIndicator();
-
-            try {
-                const apiKey = "AIzaSyBm0uMkgPJpiG04snGbXAQNmsISivlQ8mw";
-                if (!apiKey) {
-                    addMessageToChatbox('Error: API Key belum dikonfigurasi.', 'ai');
-                    console.error("API Key is not configured in script.js.");
-                    chatboxSendButton.disabled = false;
-                    chatboxSendButton.innerHTML = originalButtonContent;
-                    removeTypingIndicator();
-                    return;
-                }
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                const payload = {
-                    contents: chatHistory,
-                };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                removeTypingIndicator();
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    console.error('Error dari API:', errorData);
-                    const displayError = errorData?.error?.message || `Gagal menghubungi AI. Status: ${response.status}`;
-                    addMessageToChatbox(displayError, 'ai');
-                    chatHistory.push({ role: "model", parts: [{ text: displayError }] });
-                    return;
-                }
-
-                const result = await response.json();
-
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const aiResponseText = result.candidates[0].content.parts[0].text;
-                    addMessageToChatbox(aiResponseText, 'ai');
-                    chatHistory.push({ role: "model", parts: [{ text: aiResponseText }] });
-                } else if (result.candidates && result.candidates.length > 0 && result.candidates[0].finishReason === "SAFETY") {
-                    const safetyMessage = "Respons saya diblokir karena alasan keamanan. Silakan coba pertanyaan lain.";
-                    addMessageToChatbox(safetyMessage, 'ai');
-                    chatHistory.push({ role: "model", parts: [{ text: safetyMessage }] });
-                }
-                else {
-                    console.error('Struktur respons tidak diharapkan:', result);
-                    addMessageToChatbox('Maaf, saya tidak dapat memproses permintaan Anda saat ini (format respons tidak sesuai).', 'ai');
-                    chatHistory.push({ role: "model", parts: [{ text: 'Maaf, saya tidak dapat memproses permintaan Anda saat ini (format respons tidak sesuai).' }] });
-                }
-
-            } catch (error) {
-                console.error('Error saat memanggil Gemini API:', error);
-                removeTypingIndicator();
-                addMessageToChatbox(`Maaf, terjadi masalah: ${error.message}`, 'ai');
-            } finally {
-                chatboxSendButton.disabled = false;
-                chatboxSendButton.innerHTML = originalButtonContent;
-                if (chatboxInput) chatboxInput.focus();
-            }
-        }
-
-        chatboxSendButton.addEventListener('click', sendMessage);
-        chatboxInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter' && !chatboxSendButton.disabled) {
-                sendMessage();
+        mobileChatSendButton.addEventListener('click', () => handleSendMessage(mobileChatInput.value, mobileChatHistory, mobileChatMessages, mobileChatInput, mobileChatSendButton));
+        mobileChatInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter' && !mobileChatSendButton.disabled) {
+                handleSendMessage(mobileChatInput.value, mobileChatHistory, mobileChatMessages, mobileChatInput, mobileChatSendButton);
             }
         });
+    } else {
+        console.warn('Elemen untuk chatbox mobile tidak lengkap.');
     }
+
+    // Inisialisasi Chatbox Desktop (Integrated)
+    if (desktopChatMessages && desktopChatInput && desktopChatSendButton) {
+        console.log("Desktop chat elements FOUND. Initializing desktop chat.");
+        let desktopInternalChatHistory = [
+            { role: "user", parts: [{ text: systemInstructions }] },
+            { role: "model", parts: [{ text: initialAiGreeting }] }
+        ];
+
+        desktopChatMessages.innerHTML = '';
+        addMessageToChatUI(initialAiGreeting, 'ai', desktopChatMessages);
+        console.log("Desktop chat initial greeting added.");
+
+        desktopChatSendButton.addEventListener('click', () => {
+            console.log("Desktop chat SEND BUTTON CLICKED.");
+            handleSendMessage(desktopChatInput.value, desktopInternalChatHistory, desktopChatMessages, desktopChatInput, desktopChatSendButton);
+        });
+        desktopChatInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter' && !desktopChatSendButton.disabled) {
+                console.log("Desktop chat INPUT ENTER PRESSED.");
+                handleSendMessage(desktopChatInput.value, desktopInternalChatHistory, desktopChatMessages, desktopChatInput, desktopChatSendButton);
+            }
+        });
+        console.log("Desktop chat event listeners attached.");
+    } else {
+        console.warn("One or more DESKTOP chat elements NOT FOUND.");
+        if (!desktopChatMessages) console.warn("desktop-chat-messages not found");
+        if (!desktopChatInput) console.warn("desktop-chat-input not found");
+        if (!desktopChatSendButton) console.warn("desktop-chat-send not found");
+    }
+    // --- AKHIR LOGIKA CHATBOX ---
 });
