@@ -33,6 +33,7 @@
     /* Warna untuk Navigasi Fresh (Sesuai Gambar) */
     --color-header-bg-transparent: transparent;
     --color-header-container-bg-scroll: rgba(186, 230, 253, 0.95);
+    /* Sky-200 (#BAE6FD) opacity untuk background container saat scroll */
     --color-logo-text-initial: var(--color-text-dark-main);
     --color-logo-text-scroll: var(--color-text-dark-main);
 
@@ -299,22 +300,26 @@ body.no-scroll {
 #main-header.scrolled>.container {
     background-color: var(--color-header-container-bg-scroll);
     border-radius: 9999px;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    /* Bentuk pil penuh */
+    padding-top: 0.3rem;
+    /* Disesuaikan agar lebih pas dengan nav-fresh-container */
+    padding-bottom: 0.3rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     box-shadow: 0 4px 12px var(--color-nav-container-shadow);
+    display: inline-block;
+    /* Agar lebarnya mengikuti konten di dalamnya */
+    /* Untuk memusatkan, kita perlu wrapper tambahan di HTML atau styling pada parent #main-header */
 }
 
+/* Media query untuk desktop, padding bisa lebih besar */
 @media (min-width: 640px) {
-
-    /* sm breakpoint */
     #main-header.scrolled>.container {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
 }
 
@@ -683,8 +688,6 @@ body.no-scroll {
 .contact-link-text-fresh:hover {
     color: var(--color-accent-blue-sky);
 }
-
-/* Gaya tombol kontak untuk desktop (sm ke atas) akan menggunakan kelas Tailwind langsung di HTML jika berbeda */
 
 
 /* Footer Fresh */
