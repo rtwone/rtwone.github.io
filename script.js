@@ -503,7 +503,16 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
                 sendButton.disabled = false;
                 sendButton.innerHTML = originalButtonContent;
             }
-            if (inputField) inputField.focus();
+            // Jangan fokus otomatis pada input field di mobile setelah mengirim pesan
+            // if(inputField && !chatboxContainer.classList.contains('md:hidden')) inputField.focus(); 
+            if (inputField && (inputField.id === 'desktop-chat-input' || (inputField.id === 'chatbox-input' && chatboxContainer.classList.contains('open')))) {
+                // Fokus hanya jika chatbox desktop atau mobile chatbox yang terbuka sedang digunakan
+                // dan untuk mobile, hanya jika inputnya sendiri yang memicu send (misal: enter)
+                // Untuk mobile, kita nonaktifkan auto-focus setelah send untuk mencegah keyboard muncul lagi
+                if (inputField.id === 'desktop-chat-input') {
+                    inputField.focus();
+                }
+            }
         }
     }
 
@@ -523,13 +532,18 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
         chatboxToggle.addEventListener('click', (event) => {
             event.stopPropagation();
             chatboxContainer.classList.toggle('open');
-            if (chatboxOverlay) chatboxOverlay.classList.toggle('hidden');
-            if (chatboxOverlay) chatboxOverlay.classList.toggle('visible'); // Gunakan kelas visible
+            if (chatboxOverlay) {
+                if (chatboxContainer.classList.contains('open')) {
+                    chatboxOverlay.classList.add('visible');
+                } else {
+                    chatboxOverlay.classList.remove('visible');
+                }
+            }
             document.body.classList.toggle('no-scroll', chatboxContainer.classList.contains('open'));
 
             if (chatboxContainer.classList.contains('open')) {
                 chatboxToggle.innerHTML = '<i class="fas fa-times"></i>';
-                if (mobileChatInput) mobileChatInput.focus();
+                // HAPUS: if (mobileChatInput) mobileChatInput.focus(); // Jangan auto-focus di mobile
             } else {
                 chatboxToggle.innerHTML = '<i class="fas fa-comments"></i>';
             }
@@ -538,7 +552,6 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
             chatboxContainer.classList.remove('open');
             if (chatboxOverlay) {
                 chatboxOverlay.classList.remove('visible');
-                chatboxOverlay.classList.add('hidden');
             }
             document.body.classList.remove('no-scroll');
             chatboxToggle.innerHTML = '<i class="fas fa-comments"></i>';
@@ -548,7 +561,6 @@ Selalu gunakan Bahasa Indonesia yang baik dan sopan.`;
             chatboxOverlay.addEventListener('click', () => {
                 chatboxContainer.classList.remove('open');
                 chatboxOverlay.classList.remove('visible');
-                chatboxOverlay.classList.add('hidden');
                 document.body.classList.remove('no-scroll');
                 chatboxToggle.innerHTML = '<i class="fas fa-comments"></i>';
             });
