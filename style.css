@@ -1,0 +1,806 @@
+/* Variabel Warna Utama Fresh Vibe dengan Hero Putih */
+:root {
+    /* Warna Dasar & Aksen Utama */
+    --color-primary-fresh: #A7F3D0;
+    /* Emerald-200 (Hijau Mint Sangat Muda) */
+    --color-primary-fresh-darker: #6EE7B7;
+    /* Emerald-300 */
+    --color-accent-green-vibrant: #10B981;
+    /* Emerald-500 (Hijau Lebih Pekat) */
+    --color-accent-blue-sky: #E0F2FE;
+    /* Sky-100 (Biru Langit Sangat Muda) */
+    --color-text-dark-main: #065F46;
+    /* Emerald-700 (Hijau Tua Pekat) */
+    --color-text-dark-subtle: #047857;
+    /* Emerald-600 */
+    --color-text-on-primary-bg: var(--color-text-dark-main);
+    --color-text-on-dark-bg: #F0FDFA;
+    /* Emerald-50 */
+    --color-white-pure: #FFFFFF;
+    --color-background-body: var(--color-white-pure);
+
+    /* Warna untuk Hero Section (Background Putih) */
+    --color-hero-bg: var(--color-white-pure);
+    --color-hero-text-main: var(--color-text-dark-main);
+    --color-hero-text-accent: var(--color-accent-green-vibrant);
+    --color-hero-button-bg: var(--color-primary-fresh);
+    --color-hero-button-text: var(--color-text-dark-main);
+    --color-hero-button-hover-bg: var(--color-primary-fresh-darker);
+    --color-hero-button-hover-text: var(--color-text-dark-main);
+    --color-network-particle: rgba(16, 185, 129, 0.5);
+    --color-network-line: rgba(16, 185, 129, 0.2);
+
+    /* Warna untuk Navigasi Fresh (Sesuai Gambar) */
+    --color-header-bg-transparent: transparent;
+    --color-header-container-bg-scroll: rgba(186, 230, 253, 0.95);
+    --color-logo-text-initial: var(--color-text-dark-main);
+    --color-logo-text-scroll: var(--color-text-dark-main);
+
+    --color-nav-container-bg: rgba(110, 231, 183, 0.85);
+    --color-nav-container-scroll-bg: rgba(110, 231, 183, 0.9);
+    --color-nav-container-shadow: rgba(0, 0, 0, 0.08);
+    --color-nav-link-fresh-bg-active: var(--color-white-pure);
+    --color-nav-link-fresh-text-active: var(--color-text-dark-main);
+    --color-nav-link-fresh-text: var(--color-white-pure);
+
+    /* Warna untuk "My Works" Section */
+    --color-myworks-section-bg: var(--color-accent-blue-sky);
+    --color-myworks-title: var(--color-text-dark-main);
+    --color-myworks-subtitle: var(--color-text-dark-subtle);
+    --color-myworks-button-bg: var(--color-primary-fresh-darker);
+    --color-myworks-button-text: var(--color-text-on-dark-bg);
+    --color-myworks-button-hover-bg: #34D399;
+
+    /* Warna untuk Project Cards Fresh */
+    --color-project-card-bg: var(--color-white-pure);
+    --color-project-card-shadow: rgba(16, 185, 129, 0.08);
+    --color-project-card-title: var(--color-text-dark-main);
+    --color-project-card-description: #374151;
+    --color-project-card-link-bg: var(--color-primary-fresh-darker);
+    --color-project-card-link-text: var(--color-text-on-dark-bg);
+    --color-project-card-link-hover-bg: #34D399;
+    --color-project-card-tag-bg: rgba(22, 163, 74, 0.85);
+    --color-project-card-tag-text: var(--color-white-pure);
+    --color-project-card-arrow-icon-bg: rgba(255, 255, 255, 0.8);
+    --color-project-card-arrow-icon: var(--color-primary-fresh-darker);
+
+    /* Warna untuk Section "About Me" */
+    --color-about-bg: var(--color-white-pure);
+    --color-about-title: var(--color-text-dark-main);
+    --color-about-underline: var(--color-primary-fresh-darker);
+
+    /* Warna untuk Section "Contact" Fresh */
+    --color-contact-bg: var(--color-primary-fresh-darker);
+    --color-contact-text: var(--color-text-on-dark-bg);
+    --color-contact-title: var(--color-white-pure);
+    --color-contact-underline: var(--color-white-pure);
+    --color-contact-link-bg: var(--color-white-pure);
+    --color-contact-link-text: var(--color-text-dark-main);
+    --color-contact-link-hover-bg: #E0F2FE;
+
+    /* Warna untuk Footer Fresh */
+    --color-footer-bg: var(--color-text-dark-main);
+    --color-footer-text: var(--color-primary-fresh);
+
+    /* Warna untuk Chatbox Fresh (Diperbarui) */
+    --color-chatbox-header-bg-fresh: var(--color-primary-fresh-darker);
+    --color-chatbox-toggle-bg-fresh: var(--color-primary-fresh-darker);
+    --color-chatbox-toggle-hover-bg-fresh: #34D399;
+    --color-chatbox-send-bg-fresh: var(--color-primary-fresh-darker);
+    --color-chatbox-send-hover-bg-fresh: #34D399;
+    --color-chatbox-user-message-bg-fresh: var(--color-primary-fresh);
+    --color-chatbox-user-message-text-fresh: var(--color-text-dark-main);
+    --color-chatbox-ai-message-bg-fresh: #ECFDF5;
+    --color-chatbox-ai-message-text-fresh: var(--color-text-dark-main);
+    --color-chatbox-text-on-primary-bg-fresh: var(--color-text-on-dark-bg);
+
+
+    /* Warna untuk Loading Screen */
+    --color-loading-sky: #BAE6FD;
+    --color-loading-airplane: var(--color-white-pure);
+    --color-loading-cloud: rgba(255, 255, 255, 0.75);
+    --color-loading-text: var(--color-text-dark-main);
+    --color-typing-dot: #4A5568;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-background-body);
+    color: var(--color-text-dark-main);
+    line-height: 1.7;
+}
+
+/* Loading Screen Styles */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-loading-sky);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+    transition: opacity 0.5s ease-out 0.2s, visibility 0.5s ease-out 0.2s;
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sky {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.airplane-container-2d {
+    position: absolute;
+    top: 50%;
+    left: -250px;
+    width: auto;
+    animation: flyAcross2D 6s ease-in-out forwards;
+    z-index: 10;
+    transform: translateY(-50%);
+}
+
+.airplane-2d {
+    font-size: 9rem;
+    color: var(--color-loading-airplane);
+    text-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+}
+
+.airplane-2d i {
+    display: block;
+}
+
+
+.cloud {
+    position: absolute;
+    background-color: var(--color-loading-cloud);
+    border-radius: 50%;
+    opacity: 0.65;
+    filter: blur(2.5px);
+    z-index: 5;
+}
+
+.cloud1 {
+    width: 230px;
+    height: 75px;
+    top: 12%;
+    left: 10%;
+    animation: drift 45s linear infinite;
+}
+
+.cloud2 {
+    width: 170px;
+    height: 55px;
+    top: 30%;
+    left: 70%;
+    animation: drift 55s linear infinite 1.5s;
+    opacity: 0.55;
+}
+
+.cloud3 {
+    width: 290px;
+    height: 85px;
+    top: 65%;
+    left: 15%;
+    animation: drift 50s linear infinite 0.8s;
+}
+
+.cloud4 {
+    width: 200px;
+    height: 60px;
+    top: 80%;
+    left: 65%;
+    animation: drift 58s linear infinite 2s;
+    opacity: 0.6;
+}
+
+.cloud5 {
+    width: 140px;
+    height: 45px;
+    top: 45%;
+    left: 40%;
+    animation: drift 60s linear infinite 2.5s;
+    opacity: 0.5;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background-color: inherit;
+    border-radius: 50%;
+    opacity: inherit;
+    filter: inherit;
+}
+
+.cloud::before {
+    width: 60%;
+    height: 100%;
+    top: -45%;
+    left: 20%;
+}
+
+.cloud::after {
+    width: 80%;
+    height: 100%;
+    top: -25%;
+    right: 10%;
+}
+
+.loading-text {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.25rem;
+    color: var(--color-loading-text);
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    z-index: 15;
+}
+
+@keyframes flyAcross2D {
+    0% {
+        left: -250px;
+        transform: translateY(-50%) rotate(-5deg) scale(0.9);
+    }
+
+    15% {
+        transform: translateY(-50%) rotate(0deg) scale(1);
+    }
+
+    85% {
+        transform: translateY(-50%) rotate(0deg) scale(1);
+    }
+
+    100% {
+        left: calc(100vw + 150px);
+        transform: translateY(-50%) rotate(5deg) scale(0.9);
+    }
+}
+
+
+@keyframes drift {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(calc(100vw + 100%));
+    }
+}
+
+/* Header & Navigasi Fresh (Sticky) */
+#main-header {
+    background-color: var(--color-header-bg-transparent);
+    transition: background-color 0.3s ease-in-out;
+}
+
+#main-header.scrolled {
+    /* Header utama tidak memiliki background atau shadow */
+}
+
+#main-header.scrolled>.container {
+    background-color: var(--color-header-container-bg-scroll);
+    border-radius: 9999px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 4px 12px var(--color-nav-container-shadow);
+}
+
+
+#main-header.scrolled .logo-text-initial {
+    color: var(--color-logo-text-scroll);
+}
+
+#main-header.scrolled .nav-fresh-container {
+    background-color: var(--color-nav-container-scroll-bg);
+}
+
+
+.logo-text-initial {
+    color: var(--color-logo-text-initial);
+}
+
+.logo-icon-placeholder {
+    font-size: 1.5rem;
+}
+
+.nav-fresh-container {
+    background-color: var(--color-nav-container-bg);
+    padding: 0.5rem;
+    border-radius: 9999px;
+    box-shadow: 0 4px 12px var(--color-nav-container-shadow);
+    display: flex;
+    gap: 0.4rem;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.nav-mover {
+    position: absolute;
+    top: 0.5rem;
+    height: calc(100% - 1rem);
+    background-color: var(--color-nav-link-fresh-bg-active);
+    border-radius: 9999px;
+    z-index: 0;
+    transition: left 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), width 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s ease-out;
+    opacity: 0;
+}
+
+.nav-link-fresh {
+    padding: 0.5rem 1rem;
+    /* Padding disesuaikan agar lebih pas di mobile */
+    border-radius: 9999px;
+    font-weight: 500;
+    /* Sedikit lebih tipis */
+    transition: color 0.2s ease-out;
+    font-size: 0.85rem;
+    /* Sedikit lebih kecil */
+    text-align: center;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+    background-color: transparent !important;
+    color: var(--color-nav-link-fresh-text);
+    cursor: pointer;
+}
+
+.nav-link-fresh.active-state,
+.nav-link-fresh.hover-state {
+    color: var(--color-nav-link-fresh-text-active) !important;
+}
+
+
+/* Hero Section Styling Fresh */
+.hero-section-fresh {
+    background-color: var(--color-hero-bg);
+    padding-bottom: 6rem;
+    color: var(--color-hero-text-main);
+}
+
+.sparkle-text {
+    color: var(--color-hero-text-accent);
+}
+
+.btn-fresh-primary {
+    display: inline-block;
+    background-color: var(--color-hero-button-bg);
+    color: var(--color-hero-button-text);
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-fresh-primary:hover {
+    background-color: var(--color-hero-button-hover-bg);
+    color: var(--color-hero-button-hover-text);
+}
+
+.profile-picture-fresh {
+    border-radius: 1.5rem;
+    border: 4px solid white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    object-fit: cover;
+}
+
+
+/* Section Title Underline (Fresh) */
+.section-title-fresh {
+    color: var(--color-about-title);
+}
+
+.section-title-underline-fresh {
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--color-about-underline);
+    margin-top: 10px;
+    border-radius: 2px;
+}
+
+.text-center .section-title-underline-fresh {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-section-title-line-fresh.section-title-underline-fresh {
+    background-color: var(--color-contact-underline);
+}
+
+
+/* "My Works" Section Styles Fresh */
+.bg-myworks-section-fresh {
+    background-color: var(--color-myworks-section-bg);
+}
+
+.text-myworks-title-fresh {
+    color: var(--color-myworks-title);
+}
+
+.text-myworks-subtitle-fresh {
+    color: var(--color-myworks-subtitle);
+}
+
+.btn-fresh-secondary {
+    display: inline-block;
+    background-color: var(--color-myworks-button-bg);
+    color: var(--color-myworks-button-text);
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-fresh-secondary:hover {
+    background-color: var(--color-myworks-button-hover-bg);
+}
+
+/* Project Card Styles Fresh */
+.project-card-fresh {
+    background-color: var(--color-project-card-bg);
+    border-radius: 20px;
+    box-shadow: 0 8px 16px var(--color-project-card-shadow);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card-fresh:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px var(--color-project-card-shadow);
+}
+
+.project-card-fresh .project-image-fresh {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.project-card-fresh .project-content-fresh {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.project-card-fresh .project-title-fresh {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-project-card-title);
+    margin-bottom: 8px;
+}
+
+.project-card-fresh .project-description-fresh {
+    font-size: 0.875rem;
+    color: var(--color-project-card-description);
+    margin-bottom: 16px;
+    line-height: 1.6;
+    min-height: 50px;
+}
+
+.project-card-fresh .project-link-fresh {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+    background-color: var(--color-project-card-link-bg);
+    color: var(--color-project-card-link-text);
+    margin-top: auto;
+}
+
+.project-card-fresh .project-link-fresh:hover {
+    background-color: var(--color-project-card-link-hover-bg);
+}
+
+.project-card-fresh .project-tag-fresh {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: var(--color-project-card-tag-bg);
+    color: var(--color-project-card-tag-text);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.project-card-fresh .arrow-icon-fresh {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--color-project-card-arrow-icon-bg);
+    color: var(--color-project-card-arrow-icon);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+/* Contact Section Fresh */
+.bg-contact-fresh {
+    background-color: var(--color-contact-bg);
+}
+
+.contact-link-fresh {
+    background-color: var(--color-contact-link-bg);
+    color: var(--color-contact-link-text);
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.contact-link-fresh:hover {
+    background-color: var(--color-contact-link-hover-bg);
+}
+
+/* Footer Fresh */
+.bg-footer-fresh {
+    background-color: var(--color-footer-bg);
+}
+
+.text-footer-text-fresh {
+    color: var(--color-footer-text);
+}
+
+.text-accent-light-green {
+    color: var(--color-primary-fresh-darker);
+}
+
+
+/* Chatbox Styles Fresh (Diperbarui untuk Ukuran Lebih Besar dan Bubble) */
+.chatbox-toggle-fresh {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-chatbox-toggle-bg-fresh);
+    color: var(--color-chatbox-text-on-primary-bg-fresh);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1002;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.chatbox-toggle-fresh i {
+    pointer-events: none;
+}
+
+.chatbox-container-fresh {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 450px;
+    max-width: 95vw;
+    height: 600px;
+    max-height: calc(100vh - 110px);
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1001;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.chatbox-container-fresh.open {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.chatbox-header-fresh {
+    background-color: var(--color-chatbox-header-bg-fresh);
+    color: var(--color-chatbox-text-on-primary-bg-fresh);
+    padding: 15px;
+    font-weight: 600;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbox-close-fresh {
+    background: none;
+    border: none;
+    color: var(--color-chatbox-text-on-primary-bg-fresh);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.chatbox-messages-fresh {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #F9FAFB;
+    padding-bottom: 20px;
+}
+
+.chat-message {
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    line-height: 1.6;
+    word-break: break-word;
+    max-width: 80%;
+}
+
+.chat-message code {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #f0f0f0;
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.chat-message pre {
+    background-color: #f0f0f0;
+    padding: 0.5em;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 0.5em 0;
+}
+
+.chat-message pre code {
+    background-color: transparent;
+    padding: 0;
+    font-size: 0.9em;
+}
+
+.chat-message.user-message {
+    background-color: var(--color-chatbox-user-message-bg-fresh);
+    color: var(--color-chatbox-user-message-text-fresh);
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+}
+
+.chat-message.ai-message {
+    background-color: #ECFDF5;
+    color: var(--color-chatbox-ai-message-text-fresh);
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+}
+
+.chatbox-input-container-fresh {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e5e7eb;
+    background-color: white;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.chatbox-input-fresh {
+    flex-grow: 1;
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    border-radius: 25px;
+    margin-right: 8px;
+    font-size: 1rem;
+}
+
+.chatbox-input-fresh:focus {
+    border-color: var(--color-primary-fresh-darker);
+    box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.5);
+    outline: none;
+}
+
+.chatbox-send-fresh {
+    background-color: var(--color-chatbox-send-bg-fresh);
+    color: var(--color-chatbox-text-on-primary-bg-fresh);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chatbox-send-fresh:hover {
+    background-color: var(--color-chatbox-send-hover-bg-fresh);
+}
+
+.chatbox-send-fresh:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.chatbox-send-fresh i {
+    font-size: 1.1rem;
+}
+
+/* Style untuk AI Typing Indicator (dengan animasi titik baru) */
+.ai-typing-indicator {
+    background-color: #e2e8f0;
+    color: var(--color-typing-dot);
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    line-height: 1;
+    align-self: flex-start;
+    max-width: 80%;
+    display: flex;
+    align-items: center;
+}
+
+.ai-typing-indicator .typing-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background-color: var(--color-typing-dot);
+    border-radius: 50%;
+    animation: bounce-dot 1.4s infinite ease-in-out;
+}
+
+.ai-typing-indicator .typing-dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.ai-typing-indicator .typing-dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+.ai-typing-indicator .typing-dot:nth-child(4) {
+    animation-delay: 0.16s;
+}
+
+
+@keyframes bounce-dot {
+
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-6px);
+    }
+}
