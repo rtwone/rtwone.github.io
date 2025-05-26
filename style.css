@@ -74,10 +74,9 @@
     --color-contact-text: var(--color-text-on-dark-bg);
     --color-contact-title: var(--color-white-pure);
     --color-contact-underline: var(--color-white-pure);
-    --color-contact-link-bg: var(--color-white-pure);
-    --color-contact-link-text: var(--color-text-dark-main);
-    --color-contact-link-hover-bg: #E0F2FE;
-    --color-contact-link-text-hover: var(--color-primary-fresh-darker);
+    --color-contact-link-text-fresh: var(--color-white-pure);
+    --color-contact-link-text-fresh-hover: var(--color-accent-blue-sky);
+
 
     /* Warna untuk Footer Fresh */
     --color-footer-bg: var(--color-text-dark-main);
@@ -685,21 +684,7 @@ body.no-scroll {
     color: var(--color-accent-blue-sky);
 }
 
-@media (min-width: 640px) {
-    .contact-link-text-fresh {
-        background-color: var(--color-contact-link-bg);
-        color: var(--color-contact-link-text);
-        padding: 0.75rem 1.5rem;
-        border-radius: 9999px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        font-size: initial;
-    }
-
-    .contact-link-text-fresh:hover {
-        background-color: var(--color-contact-link-hover-bg);
-        color: var(--color-contact-link-text-hover);
-    }
-}
+/* Gaya tombol kontak untuk desktop (sm ke atas) akan menggunakan kelas Tailwind langsung di HTML jika berbeda */
 
 
 /* Footer Fresh */
