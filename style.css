@@ -279,7 +279,7 @@ body {
     }
 }
 
-/* Header & Navigasi Fresh (Sticky) */
+/* Header & Navigasi Fresh (Sticky & Responsif) */
 #main-header {
     background-color: var(--color-header-bg-transparent);
     transition: background-color 0.3s ease-in-out;
@@ -294,12 +294,22 @@ body {
     border-radius: 9999px;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.5rem;
+    /* Disesuaikan untuk mobile */
+    padding-right: 0.5rem;
+    /* Disesuaikan untuk mobile */
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     box-shadow: 0 4px 12px var(--color-nav-container-shadow);
+}
+
+/* Pada layar sm ke atas, kembalikan padding horizontal container biru */
+@media (min-width: 640px) {
+    #main-header.scrolled>.container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
 
 
@@ -322,19 +332,33 @@ body {
 
 .nav-fresh-container {
     background-color: var(--color-nav-container-bg);
-    padding: 0.5rem;
+    padding: 0.3rem;
+    /* Padding internal kontainer navigasi sedikit dikurangi untuk mobile */
     border-radius: 9999px;
     box-shadow: 0 4px 12px var(--color-nav-container-shadow);
     display: flex;
-    gap: 0.4rem;
+    gap: 0.2rem;
+    /* Spasi antar link dikurangi untuk mobile */
     position: relative;
     transition: background-color 0.3s ease-in-out;
 }
 
+@media (min-width: 640px) {
+
+    /* sm breakpoint */
+    .nav-fresh-container {
+        padding: 0.5rem;
+        gap: 0.4rem;
+    }
+}
+
+
 .nav-mover {
     position: absolute;
-    top: 0.5rem;
-    height: calc(100% - 1rem);
+    top: 0.3rem;
+    /* Disesuaikan dengan padding container */
+    height: calc(100% - 0.6rem);
+    /* Disesuaikan dengan padding container */
     background-color: var(--color-nav-link-fresh-bg-active);
     border-radius: 9999px;
     z-index: 0;
@@ -342,15 +366,24 @@ body {
     opacity: 0;
 }
 
+@media (min-width: 640px) {
+
+    /* sm breakpoint */
+    .nav-mover {
+        top: 0.5rem;
+        height: calc(100% - 1rem);
+    }
+}
+
 .nav-link-fresh {
-    padding: 0.5rem 1rem;
-    /* Padding disesuaikan agar lebih pas di mobile */
+    padding: 0.4rem 0.8rem;
+    /* Padding link dikurangi untuk mobile */
     border-radius: 9999px;
     font-weight: 500;
-    /* Sedikit lebih tipis */
+    /* Font weight sedikit dikurangi */
     transition: color 0.2s ease-out;
-    font-size: 0.85rem;
-    /* Sedikit lebih kecil */
+    font-size: 0.8rem;
+    /* Ukuran font link dikurangi untuk mobile */
     text-align: center;
     line-height: 1.5;
     position: relative;
@@ -358,7 +391,20 @@ body {
     background-color: transparent !important;
     color: var(--color-nav-link-fresh-text);
     cursor: pointer;
+    white-space: nowrap;
+    /* Mencegah teks wrap di mobile */
 }
+
+@media (min-width: 640px) {
+
+    /* sm breakpoint */
+    .nav-link-fresh {
+        padding: 0.6rem 1.3rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+}
+
 
 .nav-link-fresh.active-state,
 .nav-link-fresh.hover-state {
