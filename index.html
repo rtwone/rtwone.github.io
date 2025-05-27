@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -77,7 +76,7 @@
                         <img src="https://placehold.co/350x350/A7F3D0/065F46?text=Irfan"
                             alt="Foto Profil Irfan Hariyanto"
                             class="profile-picture-fresh w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96"
-                            onerror="this.src='https://placehold.co/350x350/CCCCCC/FFFFFF?text=Gagal+Muat'">
+                            onerror="this.src='https://placehold.co/350x350/CCCCCC/FFFFFF?text=Gagal+Muat+Gambar'">
                     </div>
                 </div>
             </div>
@@ -92,9 +91,9 @@
                 <div class="md:flex md:items-start">
                     <div class="w-full md:w-1/3 mb-6 md:mb-0 text-center flex justify-center">
                         <img src="https://placehold.co/300x300/D1FAE5/065F46?text=Irfan"
-                            alt="[Irfan Hariyanto sedang bekerja]"
+                            alt="[Gambar Irfan Hariyanto sedang bekerja]"
                             class="rounded-xl shadow-lg mx-auto w-4/5 max-w-[200px] sm:max-w-[240px] md:max-w-xs aspect-square object-cover"
-                            onerror="this.src='https://placehold.co/300x300/CCCCCC/FFFFFF?text=Gagal+Muat'">
+                            onerror="this.src='https://placehold.co/300x300/CCCCCC/FFFFFF?text=Gagal+Muat+Gambar'">
                     </div>
                     <div class="w-full md:w-2/3 md:pl-6 lg:pl-8">
                         <div id="aboutMeContent">
@@ -105,13 +104,13 @@
                                 untuk setiap tantangan.
                             </p>
                             <p class="text-sm sm:text-base md:text-lg text-gray-700 mb-3 leading-relaxed">
-                                Dengan latar belakang yang kuat dalam [Sebutkan Bidang Keahlian Utama Anda, misal:
-                                Pengembangan Front-End, Desain UI/UX, atau lainnya], saya berdedikasi untuk menciptakan
+                                Dengan latar belakang yang kuat dalam Pengembangan WhatsBot dan Desain, saya berdedikasi
+                                untuk menciptakan
                                 produk digital yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna
                                 yang luar biasa.
                             </p>
                             <p class="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                                Di luar pekerjaan, saya gemar [Sebutkan Hobi atau Minat Anda] yang membantu saya untuk
+                                Di luar pekerjaan, saya gemar bermain game dan menonton film yang membantu saya untuk
                                 tetap kreatif dan berpikir out-of-the-box.
                             </p>
                         </div>
@@ -134,60 +133,126 @@
                         Interesting, I Want to See More!
                     </a>
                 </div>
-                <div id="project-grid-content" class="grid grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:grid-cols-3">
-                    <div class="project-card-fresh relative">
+
+                <h3 class="text-xl sm:text-2xl font-semibold text-myworks-title-fresh mt-8 mb-4 md:mt-12 md:mb-6">
+                    Development Projects</h3>
+                <div id="project-grid-content"
+                    class="flex overflow-x-auto space-x-4 sm:space-x-5 md:space-x-6 py-4 custom-scrollbar">
+                    <a href="#" class="project-card-fresh relative project-card-horizontal block"> <img
+                            src="https://placehold.co/300x200/A7F3D0/047857?text=Projek+Portofolio"
+                            alt="[Gambar Projek Portofolio Pribadi]" class="project-image-fresh-small"
+                            onerror="this.src='https://placehold.co/300x200/CCCCCC/FFFFFF?text=Gagal+Muat'">
                         <span class="project-tag-fresh text-xs px-2 py-0.5">Website</span>
-                        <img src="https://placehold.co/300x200/A7F3D0/047857?text=Projek+1" alt="[Gambar Projek 1]"
-                            class="project-image-fresh-small"
-                            onerror="this.src='https://placehold.co/300x200/CCCCCC/FFFFFF?text=Gagal+Muat'">
-                        <a href="#" class="arrow-icon-fresh text-xs w-6 h-6 top-2 right-2"><i
-                                class="fas fa-arrow-right"></i></a>
-                        <div class="project-content-fresh p-3">
+                        <span class="arrow-icon-fresh text-xs w-6 h-6 top-2 right-2"><i
+                                class="fas fa-arrow-right"></i></span>
+                        <div class="project-content-fresh">
                             <div>
-                                <h3 class="project-title-fresh text-sm sm:text-base md:text-lg">Nama Projek 1</h3>
-                                <p class="project-description-fresh text-xs sm:text-sm">Deskripsi singkat projek.</p>
-                            </div>
-                            <div class="mt-2 pt-2"> <a href="#"
-                                    class="project-link-fresh w-full text-xs sm:text-sm py-1.5 px-2">Lihat Detail</a>
+                                <h3 class="project-title-fresh text-sm sm:text-base md:text-lg">Portofolio Pribadi</h3>
+                                <p class="project-description-fresh text-xs sm:text-sm">Website portofolio interaktif
+                                    yang menampilkan keahlian dan proyek saya.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="project-card-fresh relative">
+                    </a>
+                    <a href="#" class="project-card-fresh relative project-card-horizontal block">
+                        <img src="https://placehold.co/300x200/BAE6FD/0C4A6E?text=Bot+WhatsApp"
+                            alt="[Gambar Projek Bot WhatsApp]" class="project-image-fresh-small"
+                            onerror="this.src='https://placehold.co/300x200/CCCCCC/FFFFFF?text=Gagal+Muat'">
+                        <span class="project-tag-fresh text-xs px-2 py-0.5">WhatsBot</span>
+                        <span class="arrow-icon-fresh text-xs w-6 h-6 top-2 right-2"><i
+                                class="fas fa-arrow-right"></i></span>
+                        <div class="project-content-fresh">
+                            <div>
+                                <h3 class="project-title-fresh text-sm sm:text-base md:text-lg">Bot Otomatisasi WhatsApp
+                                </h3>
+                                <p class="project-description-fresh text-xs sm:text-sm">Pengembangan bot WhatsApp untuk
+                                    berbagai keperluan otomasi.</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="project-card-fresh relative project-card-horizontal block">
+                        <img src="https://placehold.co/300x200/FDE68A/713F12?text=Aplikasi+Mobile"
+                            alt="[Gambar Projek Aplikasi Mobile]" class="project-image-fresh-small"
+                            onerror="this.src='https://placehold.co/300x200/CCCCCC/FFFFFF?text=Gagal+Muat'">
                         <span class="project-tag-fresh text-xs px-2 py-0.5">App</span>
-                        <img src="https://placehold.co/300x200/BAE6FD/0C4A6E?text=Projek+2" alt="[Gambar Projek 2]"
-                            class="project-image-fresh-small"
-                            onerror="this.src='https://placehold.co/300x200/CCCCCC/FFFFFF?text=Gagal+Muat'">
-                        <a href="#" class="arrow-icon-fresh text-xs w-6 h-6 top-2 right-2"><i
-                                class="fas fa-arrow-right"></i></a>
-                        <div class="project-content-fresh p-3">
+                        <span class="arrow-icon-fresh text-xs w-6 h-6 top-2 right-2"><i
+                                class="fas fa-arrow-right"></i></span>
+                        <div class="project-content-fresh">
                             <div>
-                                <h3 class="project-title-fresh text-sm sm:text-base md:text-lg">Nama Projek 2</h3>
-                                <p class="project-description-fresh text-xs sm:text-sm">Penjelasan menarik lainnya.</p>
-                            </div>
-                            <div class="mt-2 pt-2">
-                                <a href="#" class="project-link-fresh w-full text-xs sm:text-sm py-1.5 px-2">Lihat
-                                    Detail</a>
+                                <h3 class="project-title-fresh text-sm sm:text-base md:text-lg">Aplikasi Mobile X</h3>
+                                <p class="project-description-fresh text-xs sm:text-sm">Deskripsi singkat proyek
+                                    aplikasi mobile X.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="project-card-fresh relative">
+                    </a>
+                    <a href="#" class="project-card-fresh relative project-card-horizontal block">
+                        <img src="https://placehold.co/300x200/C7D2FE/3730A3?text=Web+E-commerce"
+                            alt="[Gambar Projek Web E-commerce]" class="project-image-fresh-small"
+                            onerror="this.src='https://placehold.co/300x200/CCCCCC/FFFFFF?text=Gagal+Muat'">
+                        <span class="project-tag-fresh text-xs px-2 py-0.5">Website</span>
+                        <span class="arrow-icon-fresh text-xs w-6 h-6 top-2 right-2"><i
+                                class="fas fa-arrow-right"></i></span>
+                        <div class="project-content-fresh">
+                            <div>
+                                <h3 class="project-title-fresh text-sm sm:text-base md:text-lg">Web E-commerce Y</h3>
+                                <p class="project-description-fresh text-xs sm:text-sm">Pengembangan platform e-commerce
+                                    dengan fitur lengkap.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <h3 class="text-xl sm:text-2xl font-semibold text-myworks-title-fresh mt-12 mb-4 md:mt-16 md:mb-6">
+                    Design Projects</h3>
+                <div id="design-project-grid-content"
+                    class="flex overflow-x-auto space-x-4 sm:space-x-5 md:space-x-6 py-4 custom-scrollbar">
+                    <a href="#" class="project-card-fresh relative project-card-horizontal block">
+                        <img src="https://placehold.co/300x200/FBCFE8/831843?text=Desain+UI+App"
+                            alt="[Gambar Projek Desain UI Aplikasi]" class="project-image-fresh-small"
+                            onerror="this.src='https://placehold.co/300x200/CCCCCC/FFFFFF?text=Gagal+Muat'">
                         <span class="project-tag-fresh text-xs px-2 py-0.5">Design</span>
-                        <img src="https://placehold.co/300x200/FBCFE8/831843?text=Projek+3" alt="[Gambar Projek 3]"
-                            class="project-image-fresh-small"
-                            onerror="this.src='https://placehold.co/300x200/CCCCCC/FFFFFF?text=Gagal+Muat'">
-                        <a href="#" class="arrow-icon-fresh text-xs w-6 h-6 top-2 right-2"><i
-                                class="fas fa-arrow-right"></i></a>
-                        <div class="project-content-fresh p-3">
+                        <span class="arrow-icon-fresh text-xs w-6 h-6 top-2 right-2"><i
+                                class="fas fa-arrow-right"></i></span>
+                        <div class="project-content-fresh">
                             <div>
-                                <h3 class="project-title-fresh text-sm sm:text-base md:text-lg">Nama Projek 3</h3>
-                                <p class="project-description-fresh text-xs sm:text-sm">Detail kreatif.</p>
-                            </div>
-                            <div class="mt-2 pt-2">
-                                <a href="#" class="project-link-fresh w-full text-xs sm:text-sm py-1.5 px-2">Lihat
-                                    Detail</a>
+                                <h3 class="project-title-fresh text-sm sm:text-base md:text-lg">Desain Antarmuka
+                                    Aplikasi</h3>
+                                <p class="project-description-fresh text-xs sm:text-sm">Pembuatan desain UI/UX yang
+                                    menarik dan fungsional untuk aplikasi.</p>
                             </div>
                         </div>
-                    </div>
+                    </a>
+                    <a href="#" class="project-card-fresh relative project-card-horizontal block">
+                        <img src="https://placehold.co/300x200/E9D5FF/581C87?text=Desain+Logo+Brand"
+                            alt="[Gambar Projek Desain Logo Brand]" class="project-image-fresh-small"
+                            onerror="this.src='https://placehold.co/300x200/CCCCCC/FFFFFF?text=Gagal+Muat'">
+                        <span class="project-tag-fresh text-xs px-2 py-0.5">Branding</span>
+                        <span class="arrow-icon-fresh text-xs w-6 h-6 top-2 right-2"><i
+                                class="fas fa-arrow-right"></i></span>
+                        <div class="project-content-fresh">
+                            <div>
+                                <h3 class="project-title-fresh text-sm sm:text-base md:text-lg">Desain Logo Brand Kopi
+                                </h3>
+                                <p class="project-description-fresh text-xs sm:text-sm">Konsep desain logo dan identitas
+                                    visual untuk brand kopi lokal.</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="project-card-fresh relative project-card-horizontal block">
+                        <img src="https://placehold.co/300x200/FED7E2/702459?text=Redesain+Web"
+                            alt="[Gambar Projek Redesain Web]" class="project-image-fresh-small"
+                            onerror="this.src='https://placehold.co/300x200/CCCCCC/FFFFFF?text=Gagal+Muat'">
+                        <span class="project-tag-fresh text-xs px-2 py-0.5">UI/UX</span>
+                        <span class="arrow-icon-fresh text-xs w-6 h-6 top-2 right-2"><i
+                                class="fas fa-arrow-right"></i></span>
+                        <div class="project-content-fresh">
+                            <div>
+                                <h3 class="project-title-fresh text-sm sm:text-base md:text-lg">Redesain Website Portal
+                                    Berita</h3>
+                                <p class="project-description-fresh text-xs sm:text-sm">Perancangan ulang antarmuka
+                                    pengguna untuk meningkatkan keterbacaan.</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -217,11 +282,10 @@
         </section>
 
 
-        <section id="contact" class="py-10 md:py-20 bg-contact-fresh text-white">
+        <section id="contact" class="py-10 md:py-20 bg-contact-fresh">
             <div class="container mx-auto px-4 sm:px-6">
                 <div class="text-left">
-                    <h2
-                        class="text-xl sm:text-2xl md:text-3xl font-bold mb-2 section-title-fresh !text-white inline-block">
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-2 section-title-fresh inline-block">
                         Hubungi Saya</h2>
                     <div class="mb-8 md:mb-12">
                         <span class="section-title-underline-fresh contact-section-title-line-fresh"></span>
